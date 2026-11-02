@@ -1,376 +1,352 @@
-🏢 EstateFlow – Complete Real Estate Management System
+<div align="center">
 
-> A personal full-stack web development project for managing properties, customers, agents, bookings, rentals, sales, payments, and maintenance in one place.
+# 🏢 EstateFlow
+### Complete Real Estate Management System
 
-Project Owner: nelamoni
-Project ID: 1297020
-Project Status: Planning / Development
-Project Type: Personal Project
-Proposed Stack: HTML, CSS, JavaScript, React, PHP, Laravel, MySQL
-
-> **Note:** This README describes the planned system. Features, endpoints, and database tables below are design targets, not claims that they are already implemented.
-
-📌 1. Introduction
-
-EstateFlow is a proposed web-based Real Estate Management System designed to simplify property listing, customer communication, booking, sales, rent collection, and payment tracking. It will provide a public property discovery website and role-based dashboards for administrators, property owners, agents, customers, and tenants.
-
-🎯 2. Project Purpose
-
-Real estate operations often depend on spreadsheets, paper records, and disconnected messaging. EstateFlow aims to centralize property records and related transactions, reduce repetitive manual work, make property availability easier to track, and provide a clearer customer experience.
-
-Objectives
-
-• Manage properties, images, prices, locations, and availability.
-• Allow customers to search, filter, view, and request property visits.
-• Track bookings, rental agreements, sales, invoices, and payments.
-• Maintain customer, owner, agent, and tenant records.
-• Support payment status, receipts, refunds, and audit history.
-• Provide role-based dashboards and operational reports.
-• Offer a responsive interface for desktop and mobile devices.
-
-👥 3. Target Users
-
-|Role            |Main activities                                                          |
-|----------------|-------------------------------------------------------------------------|
-|Administrator   |Manage users, listings, bookings, payments, and reports                  |
-|Property Owner  |View and manage owned properties and associated records                  |
-|Agent           |Manage assigned listings, leads, visits, and commissions                 |
-|Customer / Buyer|Browse properties, inquire, book visits, and track purchases             |
-|Tenant          |View rental agreements, rent invoices, payments, and maintenance requests|
-
-✨ 4. Planned Features
-
-Phase 1 — Minimum Viable Product (MVP)
-
-• Registration, login, and role-based access.
-• Property create/read/update/delete (CRUD) for authorized users.
-• Property listing with search and filters.
-• Property details, photos, and availability status.
-• Customer profiles, inquiries, and visit booking requests.
-• Basic admin dashboard.
-
-Phase 2 — Business Operations
-
-• Rental agreements, monthly rent invoices, and due-date tracking.
-• Property sales, buyer records, and installment schedules.
-• Agent assignment and commission tracking.
-• Maintenance requests and status updates.
-• Notifications and downloadable payment receipts.
-
-Phase 3 — Advanced Features
-
-• Secure online payment gateway integration.
-• Payment refunds and reconciliation.
-• Analytics and exportable reports.
-• Map-based property discovery.
-• Automated reminders and document management.
-
-🏠 5. Homepage Design
-
-The proposed homepage will include:
-
-1. Navigation bar: Logo, Home, Properties, About, Contact, Login/Register.
-2. Hero section: Property-themed banner, headline, and search controls.
-3. Search/filter bar: Location, type, budget, bedrooms, and sale/rent category.
-4. Featured properties: Responsive cards with images, price, area, and status.
-5. Why EstateFlow: Key advantages for customers and owners.
-6. How it works: Search → View details → Request visit → Confirm transaction.
-7. Call to action: List a property or contact an agent.
-8. Footer: Contact information, useful links, and legal pages.
-
-Visual direction: Clean modern layout, navy/blue primary colors, white backgrounds, teal highlights, accessible typography, and mobile-first responsive components.
-
-🛠️ 6. Technology Stack
-
-|Layer         |Technologies                                |Purpose                                            |
-|--------------|--------------------------------------------|---------------------------------------------------|
-|Frontend      |HTML, CSS, JavaScript, React                |Responsive UI and interactive pages                |
-|Backend       |PHP, Laravel                                |REST API, validation, authorization, business rules|
-|Database      |MySQL                                       |Relational data storage                            |
-|Authentication|Laravel Sanctum (proposed)                  |Secure session/API authentication                  |
-|Charts        |Chart.js (optional)                         |Dashboard visualization                            |
-|Tools         |VS Code, Git, GitHub, Composer, Node.js, npm|Development and collaboration                      |
-
-Architecture: React frontend → Laravel API → MySQL database. PHP is used through Laravel; a separate PHP backend is not required.
-
-🧱 7. Proposed Project Structure
-
-estateflow/
-├── frontend/                  # React application
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── layouts/
-│   │   ├── services/
-│   │   ├── hooks/
-│   │   └── App.jsx
-│   └── package.json
-├── backend/                   # Laravel application
-│   ├── app/
-│   ├── database/
-│   │   ├── migrations/
-│   │   └── seeders/
-│   ├── routes/
-│   │   └── api.php
-│   └── composer.json
-├── docs/
-│   ├── er-diagram.md
-│   └── api-spec.md
-└── README.md
-
-🗄️ 8. Database Model
-
-Core tables
-
-|Table                 |Key fields / relationships                                                  |
-|----------------------|----------------------------------------------------------------------------|
-|`users`               |`id` PK, name, email, password, role                                        |
-|`customer_profiles`   |`id` PK, `user_id` FK → users                                               |
-|`owner_profiles`      |`id` PK, `user_id` FK → users                                               |
-|`agent_profiles`      |`id` PK, `user_id` FK → users                                               |
-|`properties`          |`id` PK, `owner_id` FK → owner_profiles, title, price, status               |
-|`property_images`     |`id` PK, `property_id` FK → properties                                      |
-|`bookings`            |`id` PK, `property_id` FK, `customer_id` FK → customer_profiles             |
-|`rental_agreements`   |`id` PK, `property_id` FK, `tenant_user_id` FK → users                      |
-|`sales`               |`id` PK, `property_id` FK, `buyer_customer_id` FK → customer_profiles       |
-|`invoices`            |`id` PK, `customer_id` FK, optional `agreement_id` FK, optional `sale_id` FK|
-|`payments`            |`id` PK, `invoice_id` FK, amount, status, paid_at                           |
-|`payment_transactions`|`id` PK, `payment_id` FK, gateway_reference, status                         |
-|`refunds`             |`id` PK, `payment_id` FK, amount, status                                    |
-|`maintenance_requests`|`id` PK, `property_id` FK, `reported_by_user_id` FK                         |
-|`notifications`       |`id` PK, `user_id` FK, message, read_at                                     |
-
-> This is a proposed logical model. Final constraints, ownership handling, indexes, and invoice relationships will be finalized during database design. Use decimal types for money and database transactions for payment-related updates.
-
-Customer & Payment ER Diagram
-
-erDiagram
-    USERS ||--o| CUSTOMER_PROFILES : has
-    USERS ||--o| OWNER_PROFILES : has
-    OWNER_PROFILES ||--o{ PROPERTIES : owns
-    PROPERTIES ||--o{ PROPERTY_IMAGES : contains
-    CUSTOMER_PROFILES ||--o{ BOOKINGS : requests
-    PROPERTIES ||--o{ BOOKINGS : receives
-    CUSTOMER_PROFILES ||--o{ SALES : purchases
-    PROPERTIES ||--o{ SALES : sold_through
-    USERS ||--o{ RENTAL_AGREEMENTS : rents
-    PROPERTIES ||--o{ RENTAL_AGREEMENTS : leased_under
-    CUSTOMER_PROFILES ||--o{ INVOICES : billed
-    SALES ||--o{ INVOICES : generates
-    RENTAL_AGREEMENTS ||--o{ INVOICES : generates
-    INVOICES ||--o{ PAYMENTS : paid_by
-    PAYMENTS ||--o{ PAYMENT_TRANSACTIONS : processed_as
-    PAYMENTS ||--o{ REFUNDS : may_have
-
-    USERS {
-      bigint id PK
-      string name
-      string email UK
-      string password
-      string role
-    }
-    CUSTOMER_PROFILES {
-      bigint id PK
-      bigint user_id FK
-      string phone
-    }
-    OWNER_PROFILES {
-      bigint id PK
-      bigint user_id FK
-    }
-    PROPERTIES {
-      bigint id PK
-      bigint owner_id FK
-      string title
-      decimal price
-      string status
-    }
-    PROPERTY_IMAGES {
-      bigint id PK
-      bigint property_id FK
-      string image_path
-    }
-    BOOKINGS {
-      bigint id PK
-      bigint customer_id FK
-      bigint property_id FK
-      datetime visit_at
-      string status
-    }
-    SALES {
-      bigint id PK
-      bigint buyer_customer_id FK
-      bigint property_id FK
-      decimal sale_price
-    }
-    RENTAL_AGREEMENTS {
-      bigint id PK
-      bigint tenant_user_id FK
-      bigint property_id FK
-      date start_date
-      date end_date
-    }
-    INVOICES {
-      bigint id PK
-      bigint customer_id FK
-      bigint sale_id FK
-      bigint agreement_id FK
-      decimal total_amount
-      string status
-    }
-    PAYMENTS {
-      bigint id PK
-      bigint invoice_id FK
-      decimal amount
-      string status
-    }
-    PAYMENT_TRANSACTIONS {
-      bigint id PK
-      bigint payment_id FK
-      string gateway_reference
-      string status
-    }
-    REFUNDS {
-      bigint id PK
-      bigint payment_id FK
-      decimal amount
-      string status
-    }
-
-Important modeling note: Tenant invoices may require a tenant-specific billing profile or a shared customer profile; this must be resolved before implementing migrations. Each invoice should identify exactly one billing context (such as rent or sale) with explicit validation.
-
-💳 9. Payment Management Workflow
-
-1. Authorized user creates a booking deposit, rent, or sales invoice.
-2. Customer views invoice details and selects a supported payment method.
-3. Backend creates a payment attempt with a unique reference.
-4. Payment gateway processes the transaction (or an authorized admin records an offline payment).
-5. Backend verifies the gateway callback/webhook server-side.
-6. Verified successful payment updates invoice balances and generates a receipt.
-7. Failed or pending payments remain visible for retry or reconciliation.
-8. Authorized refund requests follow a separate approval and audit workflow.
-
-Payment safeguards: Never store raw card details, never trust frontend payment-success messages, verify webhook signatures, use idempotency keys, and prevent duplicate receipts or overpayments. Gateway credentials must remain on the server.
-
-🔌 10. Proposed REST API
-
-|Method|Endpoint                    |Purpose                       |
-|------|----------------------------|------------------------------|
-|POST  |`/api/register`             |Create account                |
-|POST  |`/api/login`                |Authenticate user             |
-|GET   |`/api/properties`           |List/filter properties        |
-|GET   |`/api/properties/{id}`      |View property details         |
-|POST  |`/api/properties`           |Create property (authorized)  |
-|PUT   |`/api/properties/{id}`      |Update property (authorized)  |
-|DELETE|`/api/properties/{id}`      |Remove property (authorized)  |
-|POST  |`/api/bookings`             |Request property visit        |
-|GET   |`/api/my/bookings`          |View own bookings             |
-|GET   |`/api/invoices`             |View permitted invoices       |
-|POST  |`/api/payments/initialize`  |Start payment attempt         |
-|POST  |`/api/payments/webhook`     |Receive verified gateway event|
-|GET   |`/api/payments/{id}/receipt`|Retrieve authorized receipt   |
-|GET   |`/api/admin/dashboard`      |Admin summary                 |
-
-These are planned routes and will only work after their Laravel controllers, policies, and database migrations are implemented.
-
-🚀 11. Development Setup (After Code Is Created)
-
-Prerequisites
-
-• PHP and Composer compatible with the selected Laravel release.
-• Node.js and npm compatible with the selected React/Vite release.
-• MySQL server.
-• Git and a code editor.
-
-Suggested initial scaffolding
-
-# Create the repository folder
-mkdir estateflow
-cd estateflow
-
-# Create a Laravel backend
-composer create-project laravel/laravel backend
-
-# Create a React frontend with Vite
-npm create vite@latest frontend -- --template react
-cd frontend
-npm install
-
-Backend configuration (planned)
-
-1. Create a MySQL database named estateflow.
-2. Set DB_CONNECTION=mysql, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, and DB_PASSWORD in backend/.env.
-3. Implement the proposed database migrations and seeders.
-4. From backend/, run:
-
-php artisan migrate
-php artisan serve
-
-5. From frontend/, run:
-
-npm run dev
-
-> The commands above scaffold starter projects; they **do not** automatically implement EstateFlow features. Configure CORS, authentication, and API base URLs before connecting frontend and backend. Never commit `.env` secrets.
-
-🗓️ 12. Development Roadmap
-
-|Stage                  |Target weeks|Deliverables                                       |
-|-----------------------|------------|---------------------------------------------------|
-|Planning & UI sketches |1–2         |Requirements, user flows, wireframes, ERD          |
-|Frontend foundation    |3–4         |Layout, homepage, listing and auth screens         |
-|Laravel backend        |5–6         |Database migrations, authentication, roles         |
-|Property & booking     |7–8         |Property CRUD, search, booking workflow            |
-|Rental, sales & payment|9–10        |Agreements, invoices, payment records, receipts    |
-|Quality & release      |11–12       |Testing, security review, documentation, deployment|
-
-MVP release goal: A working login, property management, listing/search, and booking flow before implementing live payments.
-
-🔐 13. Security & Quality
-
-• Hash passwords using Laravel’s supported hashing mechanisms.
-• Enforce authorization on every sensitive API route and object.
-• Validate requests server-side and use parameterized database access/Eloquent.
-• Protect authentication cookies/tokens and configure CORS appropriately.
-• Validate uploaded file type, size, and storage permissions.
-• Use HTTPS in production and keep secrets in environment configuration.
-• Write unit, feature, and end-to-end tests for core workflows.
-• Back up the database and log administrative/payment changes.
-
-🧪 14. Test Scenarios
-
-• Customer cannot edit another owner’s property.
-• Booking cannot be confirmed for an unavailable property.
-• Duplicate payment webhooks do not double-credit an invoice.
-• Failed payments do not generate paid receipts.
-• Invoice totals and remaining balances calculate correctly.
-• Unauthorized users cannot access another customer’s invoices.
-• Mobile homepage and forms remain usable on narrow screens.
-
-🌱 15. Future Improvements
-
-• Interactive map and neighborhood search.
-• Email/SMS reminders.
-• Document e-signature integration.
-• Property recommendation engine.
-• Multi-company support and localization.
-• Advanced revenue and occupancy analytics.
-
-📍 16. Current Status & Next Steps
-
-Current stage: Proposal and system design. The repository structure, API, and database schema are planned and need implementation.
-
-Recommended next steps:
-
-1. Finalize the feature scope for MVP.
-2. Create homepage and dashboard wireframes.
-3. Review the ER diagram and settle tenant/customer billing rules.
-4. Initialize the React and Laravel projects.
-5. Create Laravel migrations for users, properties, and bookings.
-6. Implement authentication and property CRUD.
-
-────────
-
-Developed by: nelamoni
-ID: 1297020
-Project: EstateFlow – Complete Real Estate Management System
+**Property discovery · Customer visits · Bookings · Rentals · Sales · Payment tracking**
+
+![Project status](https://img.shields.io/badge/status-planned-blue) ![Database](https://img.shields.io/badge/database-MySQL-4479A1) ![Backend](https://img.shields.io/badge/backend-PHP-777BB4) ![Duration](https://img.shields.io/badge/plan-30%20days-teal)
+
+**Developer:** Nelamoni · **Trainee ID:** 1297020  
+**Program:** Is-DB-BISEW · **TSP:** U.S Software Limited  
+**Course:** Web Application Development · **Batch:** PWAD/USSL-M/73/01
+
+[GitHub Repository](https://github.com/nelamonirn-dotcom/Real_Estate_Management_System_project)
+
+</div>
+
+> **Project status:** This README documents the **proposed system**, not a verified completed implementation. Features, commands, routes, and database structures are plans until implemented. Prepared from `PROJECT_PROPOSAL.pdf` (9 pages; proposal date: 03 November 2026).
+
+## 📑 Contents
+
+1. [Introduction](#-introduction)
+2. [Problem and objectives](#-problem-and-objectives)
+3. [Who benefits](#-who-benefits)
+4. [Features and delivery phases](#-features-and-delivery-phases)
+5. [Homepage and user journeys](#-homepage-and-user-journeys)
+6. [Technology and architecture](#-technology-and-architecture)
+7. [Database ER diagram](#-database-er-diagram)
+8. [Database tables and relationships](#-database-tables-and-relationships)
+9. [Payment management](#-payment-management)
+10. [Suggested project structure](#-suggested-project-structure)
+11. [Development setup](#-development-setup)
+12. [30-day development plan](#-30-day-development-plan)
+13. [Security and testing](#-security-and-testing)
+14. [Deployment and future scope](#-deployment-and-future-scope)
+15. [Source notes and open decisions](#-source-notes-and-open-decisions)
+
+## 🌟 Introduction
+
+EstateFlow is a **proposed web-based real estate management system** that unifies property listings, customer inquiries, property visits, bookings, rental agreements, sales records, payments and administrative operations. It combines a public property discovery website with restricted dashboards for authorized users.
+
+**Vision:** Make property discovery, booking, rental operations and financial tracking simpler, clearer and more reliable through one integrated web platform.
+
+## 🎯 Problem and objectives
+
+Traditional property operations often depend on paper records, spreadsheets, calls and messaging apps. This can cause stale listings, missed follow-ups, delayed rent updates and weak audit trails.
+
+**Primary objective:** Build a maintainable, secure, responsive, role-based web application for everyday real estate workflows.
+
+**Specific objectives:**
+- Centralize property and customer information.
+- Enable registration, authentication and role-based permissions.
+- Publish listings with photos, prices, locations and availability.
+- Provide search, filters, inquiries, visits and bookings.
+- Track rental agreements, dues, payment records and maintenance.
+- Offer operational dashboards and reports.
+- Use a relational MySQL model with enforceable integrity rules.
+
+**Scope boundary:** EstateFlow is not a land registry, automated legal title-verification service or live payment gateway at its initial release.
+
+## 👥 Who benefits
+
+| User | Expected benefit |
+|---|---|
+| Property owner | View inventory, occupancy, rental income and maintenance |
+| Real estate agency | Coordinate listings, inquiries, agents and sales pipeline |
+| Agent | Manage assigned properties, visits and potential commissions |
+| Buyer / customer | Search and compare properties, request visits, follow up |
+| Tenant | View agreements, payment history and maintenance updates |
+| Administrator | Manage permissions, data quality, booking queues and reports |
+
+## 🧩 Features and delivery phases
+
+| Phase | Module | Planned functions |
+|---|---|---|
+| **MVP** | Authentication | Registration, login, logout, password reset, access control |
+| **MVP** | Property inventory | Create/edit listings, upload photos, manage price and status |
+| **MVP** | Public discovery | Listings, filters, details, contact |
+| **MVP** | Bookings and visits | Visit request, agent approval, schedule |
+| **Phase 2** | Customers and agents | Profiles, assignments, inquiry follow-up |
+| **Phase 2** | Rental operations | Agreements, dues and receipts |
+| **Phase 2** | Sales and finance | Sales, installments and reports |
+| **Phase 2** | Maintenance | Complaint tickets and status tracking |
+| **Phase 3** | Notifications | Booking alerts and payment reminders |
+
+### User journeys
+
+**Customer:** Homepage → search by location and budget → property details → register/login → request visit → booking status → agent contact.
+
+**Admin:** Login → dashboard → approve listings → assign agent → review bookings → update property status → reports.
+
+## 🏠 Homepage and user journeys
+
+The planned public homepage includes:
+
+1. Header/navigation: EstateFlow, Home, Properties, About, Contact and Login.
+2. Hero section with headline and location/property-type/budget search.
+3. Featured property cards with photo, location, price and availability.
+4. “How it works”: Search → View → Book.
+5. Benefits/trust section and footer with support and policies.
+
+Additional planned screens: listing, details, login/registration, customer dashboard, agent workspace, admin dashboard, booking calendar, rent ledger, maintenance tickets and reports.
+
+**UI guidelines:** Navy-and-teal palette, responsive Bootstrap layouts, clear statuses, accessible forms and useful loading/empty/error states. Do not publish private tenant or owner details.
+
+## 🛠 Technology and architecture
+
+| Layer | Proposal technology | Purpose |
+|---|---|---|
+| Markup | HTML5 | Semantic content and forms |
+| Styling | CSS3 + Bootstrap | Responsive layouts and components |
+| Browser | JavaScript | Search, forms and interactions |
+| Backend | PHP | Server-side logic and validation |
+| Database | MySQL (InnoDB) | Relational persistence and foreign keys |
+| Tools | Git, GitHub, VS Code | Development and version control |
+
+**Intended request flow:** Browser → HTTPS → PHP application → MySQL database → PHP response → browser.
+
+> The proposal's technology table specifies **PHP + Bootstrap + MySQL**. It does not establish Bootstrap or php as mandatory implementation technologies, despite mentioning Sanctum and migrations in planning notes. If php is adopted, document its version, routes and authentication setup separately; Bootstrap should not be assumed to exist.
+
+## 🗺 Database ER diagram
+
+The image below is **extracted from page 7 of the supplied proposal**, rather than an invented replacement.
+
+![EstateFlow database ER diagram](assets/database-er-diagram.png)
+
+> The diagram is a **conceptual design**. Verify its keys, cardinalities and naming before generating production migrations. It is not evidence that the database has already been built.
+
+### ER diagram entities
+
+`roles`, `users`, `customers`, `agents`, `properties`, `property_images`, `agent_properties`, `bookings`, `visits`, `agreements`, `payments`, `commissions`, `maintenance`, `expenses`, `notifications`.
+
+### Core relationships shown in the ERD
+
+| Parent → Child | Relationship | Relevant key(s) |
+|---|---|---|
+| roles → users | One to many | `users.role_id` → `roles.role_id` |
+| users → customers | User/customer profile | `customers.user_id` → `users.user_id` |
+| users → agents | User/agent profile | `agents.user_id` → `users.user_id` |
+| users → properties | One owner to many properties | `properties.owner_id` → `users.user_id` |
+| properties → property_images | One to many | `property_images.property_id` |
+| properties ↔ agents | Many to many via `agent_properties` | `agent_properties.property_id`, `agent_properties.agent_id` |
+| properties → bookings | One to many | `bookings.property_id` |
+| customers → bookings | One to many | `bookings.customer_id` |
+| bookings → visits | One to many | `visits.booking_id` |
+| properties → visits | One to many | `visits.property_id` |
+| agents → visits | One to many | `visits.agent_id` |
+| bookings → agreements | One to many in conceptual diagram | `agreements.booking_id` |
+| agreements → payments | One to many | `payments.agreement_id` |
+| properties → maintenance | One to many | `maintenance.property_id` |
+| customers → maintenance | One to many | `maintenance.customer_id` |
+| properties → expenses | One to many | `expenses.property_id` |
+| users → notifications | One to many | `notifications.user_id` |
+| agents → commissions | One to many | `commissions.agent_id` |
+| agreements → commissions | One to many | `commissions.agreement_id` |
+
+The diagram also shows `agreements.property_id`, `agreements.customer_id`, and `payments` transaction-related attributes. The diagram uses `agreements` and `maintenance` as table names, whereas the adjacent text summary sometimes calls them `rental_agreements` and `maintenance_requests`.
+
+### Example: customer requests a property visit
+
+```mermaid
+flowchart TD
+    A[Customer registers or logs in] --> B[Browse properties]
+    B --> C[Select available property]
+    C --> D[Create booking request]
+    D --> E[Agent reviews booking]
+    E --> F{Approved?}
+    F -->|Yes| G[Schedule visit]
+    F -->|No| H[Update booking status]
+    G --> I[Customer attends visit]
+    I --> J[Update visit status]
+```
+
+**Example record path:** `users.user_id` → `customers.user_id` → `bookings.customer_id`; `properties.property_id` → `bookings.property_id` → `visits.booking_id`. Agent assignment is represented through `agent_properties` and `visits.agent_id`.
+
+## 🗃 Database tables and relationships
+
+The following is a **high-level data dictionary based on the ER image** (page 7). `PK` = primary key; `FK` = foreign key.
+
+| Table | Main identifiers and attributes |
+|---|---|
+| `roles` | `role_id` PK, `role_name`, `description` |
+| `users` | `user_id` PK, `role_id` FK, `name`, `email`, `password_hash`, `phone`, `status` |
+| `customers` | `customer_id` PK, `user_id` FK, `customer_type`, `preferred_location`, `budget`, `address` |
+| `agents` | `agent_id` PK, `user_id` FK, `commission_rate`, `status` |
+| `properties` | `property_id` PK, `owner_id` FK, `title`, `property_type`, `address`, `area_sqft`, `price`, `monthly_rent`, `bedrooms`, `bathrooms`, `status` |
+| `property_images` | `image_id` PK, `property_id` FK, `image_path`, `is_primary` |
+| `agent_properties` | `assignment_id` PK, `agent_id` FK, `property_id` FK, `assigned_at` |
+| `bookings` | `booking_id` PK, `property_id` FK, `customer_id` FK, `booking_date`, `status` |
+| `visits` | `visit_id` PK, `booking_id` FK, `property_id` FK, `customer_id` FK, `agent_id` FK, `visit_time`, `status` |
+| `agreements` | `agreement_id` PK, `booking_id` FK, `property_id` FK, `customer_id` FK, `agreement_type`, `start_date`, `end_date`, `amount`, `status` |
+| `payments` | `payment_id` PK, `agreement_id` FK, `amount`, `due_date`, `paid_at`, `payment_type`, `payment_method`, `transaction_ref`, `status` |
+| `commissions` | `commission_id` PK, `agent_id` FK, `agreement_id` FK, `amount`, `payment_status`, `paid_at` |
+| `maintenance` | `complaint_id` PK, `property_id` FK, `customer_id` FK, `title`, `description`, `priority`, `status` |
+| `expenses` | `expense_id` PK, `property_id` FK, `category`, `amount`, `expense_date` |
+| `notifications` | `notification_id` PK, `user_id` FK, `title`, `message`, `is_read` |
+
+**Implementation rules:** Use unique email addresses, indexed FKs, `DECIMAL(12,2)` for money, validation for statuses, database transactions when confirming sales/bookings, and protection against overlapping active rental agreements. Use appropriate audit/history retention.
+
+## 💳 Payment management
+
+The proposal includes a **planned payment extension** on pages 8–9. It covers rent, sale installments, booking deposits and optional maintenance charges.
+
+### Proposed payment workflow
+
+```mermaid
+flowchart TD
+    A[Create invoice] --> B[Customer selects payment method]
+    B --> C[Create pending payment attempt]
+    C --> D{Server-side verification}
+    D -->|Confirmed| E[Record successful payment]
+    D -->|Failed| F[Record failed attempt]
+    E --> G[Recalculate invoice balance]
+    G --> H[Generate receipt]
+    H --> I[Notify customer and admin]
+```
+
+### Additional payment tables (extension, not in the original ER image)
+
+| Table | Proposed fields | Purpose |
+|---|---|---|
+| `invoices` | `invoice_id` PK, `customer_id` FK, `agreement_id` FK nullable, `sale_id` FK nullable, `total_amount`, `due_date`, `status` | Bills and balances |
+| `payments` (extended) | `payment_id` PK, `invoice_id` FK, `customer_id` FK, `amount`, `method`, `status`, `paid_at` | Payment records |
+| `payment_transactions` | `transaction_id` PK, `payment_id` FK, `provider`, `external_reference` UNIQUE, `idempotency_key` UNIQUE, `verification_status` | Provider callbacks and audit |
+| `refunds` | `refund_id` PK, `payment_id` FK, `amount`, `reason`, `status`, `approved_by` FK | Refund management |
+
+**Important modeling decisions before migration:**
+
+- The original diagram connects `payments.agreement_id` to `agreements`; the extension connects `payments.invoice_id` to `invoices`. Choose a reconciled design rather than creating two incompatible `payments` tables.
+- The extension references `invoices.sale_id`, but the displayed ERD has **no `sales` table**. Design that table (or revise the relationship) before applying its FK.
+- `agreements` in the diagram supports `rent`/`sale`, while the text summary mentions `rental_agreements`; settle on consistent table names.
+- Treat the invoice status `partially_paid` separately from a payment attempt's status.
+
+**Payment controls:** Mark payments successful only after backend verification or authorized manual confirmation. Store transaction references, not PINs/CVV/card secrets. Use unique provider references, idempotency keys, transaction-safe balance updates and explicit refund permissions. **BDT** is the planned currency.
+
+## 📁 Suggested project structure
+
+> This folder layout is a **recommendation**, not a confirmed repository listing.
+
+```text
+Real_Estate_Management_System_project/
+├── README.md
+├── assets/
+│   └── database-er-diagram.png
+├── public/
+│   ├── index.php
+│   └── assets/
+├── app/
+│   ├── controllers/
+│   ├── models/
+│   └── services/
+├── config/
+│   └── database.example.php
+├── database/
+│   ├── migrations/
+│   └── seeds/
+├── resources/
+│   ├── css/
+│   └── js/
+├── tests/
+├── .env.example
+└── .gitignore
+```
+
+If the project uses php, replace this illustrative layout with php's actual generated structure.
+
+## 🚀 Development setup
+
+**Prerequisites:** PHP, MySQL, a local PHP web server (or XAMPP), Git, and VS Code. Bootstrap can initially be loaded through local assets or a supported CDN.
+
+The PDF does **not** provide a verified installer, migration files, `.env` schema, PHP version, or runnable commands. The following are **illustrative steps** for a future plain-PHP implementation, not confirmed instructions for the existing repository:
+
+```bash
+git clone https://github.com/nelamonirn-dotcom/Real_Estate_Management_System_project.git
+cd Real_Estate_Management_System_project
+```
+
+1. Create a local MySQL database after the schema name is finalized (for example, `estateflow_db`).
+2. Configure database credentials through a local environment file that is excluded from Git.
+3. Implement the database schema/migrations after reconciling the ERD and payment extension.
+4. Seed sample users and properties; never seed real credentials into a public repository.
+5. Configure the PHP web root to the application's public directory.
+6. Run and test the implemented application using its actual project-specific commands.
+
+**Do not commit:** `.env`, database passwords, payment credentials, customer documents or real personal data.
+
+## 🗓 30-day development plan
+
+The proposal specifies **30 days** but does not assign individual day-by-day tasks. This is a suggested allocation:
+
+| Days | Suggested work | Deliverable |
+|---|---|---|
+| 1–5 | Requirements, ERD reconciliation, wireframes, repository setup | Approved schema and page map |
+| 6–10 | MySQL tables, PHP DB connection, registration/login, roles | Secure authentication prototype |
+| 11–15 | Property CRUD, image upload, public listing and filters | Browsable property catalog |
+| 16–20 | Customer profiles, bookings, agent assignments, visit status | End-to-end visit workflow |
+| 21–25 | Agreements, payments, dashboard summaries, maintenance | Operational prototype |
+| 26–30 | Validation, security tests, responsive QA, demo data, README and deployment | Tested demo and documentation |
+
+**Minimum practical milestone:** A visitor can browse sample properties, filter listings and open a detail page. More complex payment features may remain Phase 2 if time is limited.
+
+## 🔐 Security and testing
+
+**Security:** Secure password hashing; backend validation; authorization for each record; rate limiting; CSRF protection for cookie-based sessions; safe file upload checks; HTTPS; restricted CORS where relevant; least-privilege DB access; protected secrets; audit-relevant changes.
+
+**Test cases:**
+- Registration rejects duplicate email; login rejects incorrect credentials.
+- Customer cannot edit another owner's property.
+- Property search filters by type, location and price.
+- Booking cannot be duplicated or approved for an unavailable unit under conflicting conditions.
+- Agent can update only authorized visits.
+- Rental agreements cannot overlap for the same unit.
+- Failed/unverified payments do not increase paid totals.
+- Repeated payment callbacks do not double-credit invoices.
+- Responsive views, empty states and validation errors behave correctly.
+
+## 🌐 Deployment and future scope
+
+**Planned deployment:** PHP-capable hosting, MySQL, HTTPS, environment-specific configuration and scheduled backups. Separate development, staging and production where feasible; test restoration.
+
+**Future possibilities:** Map search, multilingual UI, advanced owner analytics, commission automation, integrated payment gateway, downloadable PDF agreements and mobile support.
+
+## 📝 Source notes and open decisions
+
+This README was prepared from the uploaded **`PROJECT_PROPOSAL.pdf` (9 pages)**:
+
+- **Page 1:** Project identity and 30-day duration.
+- **Pages 2–4:** Vision, purpose, users, features and journeys.
+- **Page 5:** Homepage layout and technology stack.
+- **Page 6:** Architecture notes and conceptual ERD introduction.
+- **Page 7:** Original database ER diagram and integrity guidance.
+- **Pages 8–9:** Payment design, payment tables, security, testing and deployment.
+
+**Differences requiring a final design decision:**
+1. ERD: `roles`/`users.role_id`; text summary: `users.role`.
+2. ERD: `agreements`, `maintenance`; summary: `rental_agreements`, `maintenance_requests`.
+3. ERD: `payments.agreement_id`; extension: `payments.invoice_id` and `customer_id`.
+4. Payment extension refers to `sales`, which is not shown as a table in the ERD.
+5. The prose's suggested Sanctum authentication is not a complete php technology decision.
+6. The PDF's shorthand “Browser / Bootstrap → HTTPS request → MySQL” omits the PHP server layer; implementation should not connect a public browser directly to MySQL.
+
+These are **design discrepancies, not completed fixes**. Reconcile them before writing migrations, API contracts or production payment code.
+
+---
+
+<div align="center">
+
+**EstateFlow — Plan thoughtfully. Build securely. Manage property clearly.**
+
+**Prepared by Nelamoni · 1297020**
+
+</div>
