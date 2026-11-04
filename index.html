@@ -1,1208 +1,705 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Realest - Real Estate HTML Template | Home Page 02</title>
-  <!-- Stylesheets -->
-  <link href="css/bootstrap.min.css" rel="stylesheet" />
-  <link href="css/style.css" rel="stylesheet" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102b2b">
+  <meta name="description" content="Find a home that feels like yours with EstateFlow. Explore thoughtfully selected properties for sale and rent.">
+  <title>EstateFlow | Find your place</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172b2b;
+      --muted: #71807a;
+      --green: #123b37;
+      --green-deep: #102b2b;
+      --teal: #c9e6d9;
+      --mint: #eaf3ed;
+      --paper: #fbfaf6;
+      --line: #e7e9e2;
+      --white: #fff;
+      --gold: #e4b66d;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: "Segoe UI", Arial, sans-serif;
+    }
 
-  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
-  <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid #5b9e85;
+      outline-offset: 3px;
+    }
+    .shell { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
 
-  <!-- Responsive -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    .topline {
+      height: 38px;
+      color: #dce8df;
+      background: var(--green-deep);
+      font-size: 11px;
+      letter-spacing: .035em;
+    }
+    .topline-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .topline-note { display: flex; align-items: center; gap: 9px; }
+    .topline-note svg { color: var(--gold); }
+    .topline-link { color: #dce8df; transition: color .2s ease; }
+    .topline-link:hover { color: var(--teal); }
 
+    .header { position: relative; z-index: 3; background: var(--paper); }
+    .nav {
+      display: flex;
+      height: 82px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .brand-mark {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      color: var(--white);
+      background: var(--green);
+      border-radius: 12px 12px 12px 4px;
+    }
+    .brand-name { font-family: var(--serif); font-size: 24px; font-weight: 700; letter-spacing: -.055em; }
+    .brand-name span { color: #63917d; }
+    .nav-links { display: flex; align-items: center; gap: 33px; margin: 0; padding: 0; list-style: none; }
+    .nav-links a { color: #53615c; font-size: 13px; font-weight: 600; transition: color .2s ease; }
+    .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--green); }
+    .nav-actions { display: flex; align-items: center; gap: 18px; }
+    .sign-in { font-size: 13px; font-weight: 600; }
+    .button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 19px;
+      border: 0;
+      border-radius: 8px;
+      color: var(--white);
+      background: var(--green);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .button:hover { background: #20554b; transform: translateY(-1px); }
+    .button svg { width: 16px; height: 16px; }
+    .menu-toggle { display: none; width: 42px; height: 42px; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 8px; color: var(--green); background: transparent; cursor: pointer; }
+
+    .hero {
+      position: relative;
+      display: flex;
+      min-height: 590px;
+      align-items: center;
+      overflow: hidden;
+      color: var(--white);
+      background: var(--green-deep);
+      isolation: isolate;
+    }
+    .hero::before {
+      position: absolute;
+      z-index: -2;
+      inset: 0;
+      background: url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2200&q=85") center 48% / cover;
+      content: "";
+    }
+    .hero::after {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(13, 37, 35, .89) 0%, rgba(13, 37, 35, .76) 42%, rgba(13, 37, 35, .17) 100%);
+      content: "";
+    }
+    .hero-content { width: min(720px, 100%); padding: 82px 0 124px; }
+    .eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 20px; color: #d5e8dc; font-size: 10px; font-weight: 700; letter-spacing: .19em; text-transform: uppercase; }
+    .eyebrow::before { width: 26px; height: 1px; background: var(--gold); content: ""; }
+    .hero h1 { max-width: 650px; margin: 0; font-family: var(--serif); font-size: clamp(48px, 6.4vw, 78px); font-weight: 400; letter-spacing: -.055em; line-height: .99; }
+    .hero h1 em { color: #c6dfcf; font-weight: 400; }
+    .hero-copy { max-width: 450px; margin: 23px 0 28px; color: #e1e9e2; font-size: 14px; line-height: 1.8; }
+    .hero-proof { display: flex; align-items: center; gap: 12px; color: #eef4ed; font-size: 11px; }
+    .avatar-stack { display: flex; padding-left: 4px; }
+    .avatar-stack img { width: 29px; height: 29px; margin-left: -5px; border: 2px solid #23423a; border-radius: 50%; object-fit: cover; }
+    .proof-stars { color: var(--gold); letter-spacing: 2px; }
+    .hero-proof strong { color: var(--white); }
+
+    .search-wrap { position: relative; z-index: 2; margin-top: -56px; }
+    .search-panel { padding: 18px 22px 20px; border: 1px solid rgba(17, 43, 41, .07); border-radius: 12px; background: var(--white); box-shadow: 0 18px 55px rgba(28, 48, 39, .12); }
+    .search-tabs { display: flex; gap: 22px; margin-bottom: 15px; border-bottom: 1px solid var(--line); }
+    .search-tab { position: relative; padding: 0 1px 12px; border: 0; color: #8a9690; background: none; cursor: pointer; font-size: 12px; font-weight: 700; }
+    .search-tab[aria-selected="true"] { color: var(--green); }
+    .search-tab[aria-selected="true"]::after { position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; background: #63917d; content: ""; }
+    .search-fields { display: grid; grid-template-columns: 1.25fr 1fr 1fr auto; align-items: end; gap: 12px; }
+    .field { min-width: 0; }
+    .field label { display: block; margin: 0 0 8px; color: #7d8983; font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+    .input-wrap { display: flex; height: 44px; align-items: center; gap: 9px; padding: 0 12px; border: 1px solid var(--line); border-radius: 7px; color: #8d9992; }
+    .input-wrap svg { flex: 0 0 auto; }
+    .input-wrap input, .input-wrap select { width: 100%; min-width: 0; border: 0; outline: 0; color: var(--ink); background: transparent; font-size: 12px; }
+    .input-wrap input::placeholder { color: #9da69f; }
+    .input-wrap select { cursor: pointer; }
+    .input-wrap:focus-within { border-color: #7aab95; box-shadow: 0 0 0 3px rgba(122, 171, 149, .12); }
+    .search-submit { min-width: 132px; height: 44px; }
+
+    .section { padding: 88px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 30px; }
+    .section-kicker { margin: 0 0 10px; color: #6d947e; font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    .section-title { margin: 0; font-family: var(--serif); font-size: clamp(34px, 4vw, 46px); font-weight: 400; letter-spacing: -.045em; line-height: 1.12; }
+    .section-description { max-width: 420px; margin: 13px 0 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+    .text-link { display: inline-flex; align-items: center; gap: 8px; color: var(--green); font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .text-link svg { transition: transform .2s ease; }
+    .text-link:hover svg { transform: translateX(4px); }
+    .listing-meta { display: flex; min-height: 24px; align-items: center; justify-content: space-between; margin: -11px 0 19px; color: var(--muted); font-size: 11px; }
+    .property-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .property-card { overflow: hidden; border: 1px solid #e9ebe5; border-radius: 10px; background: var(--white); transition: transform .25s ease, box-shadow .25s ease; }
+    .property-card:hover { transform: translateY(-5px); box-shadow: 0 15px 38px rgba(28, 48, 39, .11); }
+    .property-image { position: relative; height: 230px; overflow: hidden; background: var(--mint); }
+    .property-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
+    .property-card:hover .property-image img { transform: scale(1.035); }
+    .badge { position: absolute; top: 14px; left: 14px; padding: 7px 10px; border-radius: 4px; color: var(--green); background: #f7fbf6; font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .favorite { position: absolute; top: 12px; right: 12px; display: grid; width: 34px; height: 34px; place-items: center; border: 0; border-radius: 50%; color: #52635c; background: rgba(255,255,255,.94); cursor: pointer; }
+    .favorite[aria-pressed="true"] { color: #c25f55; }
+    .favorite[aria-pressed="true"] svg { fill: currentColor; }
+    .property-info { padding: 17px 17px 15px; }
+    .property-place { display: flex; align-items: center; gap: 5px; color: #79867f; font-size: 10px; }
+    .property-place svg { color: #6f9a82; }
+    .property-name { margin: 8px 0 12px; font-family: var(--serif); font-size: 20px; font-weight: 400; letter-spacing: -.025em; }
+    .property-specs { display: flex; gap: 15px; padding-bottom: 14px; color: #78847e; font-size: 10px; }
+    .property-specs span { display: inline-flex; align-items: center; gap: 5px; }
+    .property-price-row { display: flex; align-items: end; justify-content: space-between; padding-top: 12px; border-top: 1px solid #eff0ec; }
+    .property-price { color: var(--green); font-family: var(--serif); font-size: 21px; font-weight: 700; }
+    .property-price small { color: #8a9690; font-family: var(--sans); font-size: 10px; font-weight: 500; }
+    .details-link { display: inline-flex; align-items: center; gap: 5px; color: #60766a; font-size: 10px; font-weight: 700; }
+    .empty-state { display: none; grid-column: 1 / -1; padding: 42px 20px; border: 1px dashed #cbd6cc; border-radius: 10px; color: var(--muted); text-align: center; }
+    .empty-state strong { display: block; margin-bottom: 5px; color: var(--ink); font-family: var(--serif); font-size: 22px; font-weight: 400; }
+
+    .trust-band { padding: 51px 0; background: #f0f3ec; }
+    .trust-inner { display: grid; grid-template-columns: 1.2fr repeat(3, 1fr); align-items: center; gap: 28px; }
+    .trust-copy { max-width: 220px; color: #78857e; font-size: 11px; line-height: 1.7; }
+    .trust-copy strong { display: block; margin-bottom: 5px; color: var(--ink); font-family: var(--serif); font-size: 18px; font-weight: 400; }
+    .trust-stat { padding-left: 24px; border-left: 1px solid #dce2d8; }
+    .trust-stat strong { display: block; color: var(--green); font-family: var(--serif); font-size: 29px; font-weight: 400; letter-spacing: -.04em; }
+    .trust-stat span { display: block; margin-top: 3px; color: #75827b; font-size: 10px; }
+
+    .how-section { padding: 88px 0 96px; }
+    .how-intro { max-width: 570px; margin: 0 auto 43px; text-align: center; }
+    .how-intro .section-kicker { justify-content: center; }
+    .how-intro .section-description { margin-inline: auto; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .step { position: relative; padding: 25px 24px; border: 1px solid var(--line); border-radius: 9px; background: rgba(255,255,255,.62); }
+    .step-number { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 50%; color: var(--green); background: var(--mint); font-family: var(--serif); font-size: 18px; }
+    .step h3 { margin: 20px 0 8px; font-family: var(--serif); font-size: 21px; font-weight: 400; }
+    .step p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+
+    .cta { padding: 58px 0; color: var(--white); background: var(--green); }
+    .cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .cta .section-kicker { color: #c4dece; }
+    .cta h2 { max-width: 590px; margin: 0; font-family: var(--serif); font-size: clamp(30px, 4vw, 42px); font-weight: 400; letter-spacing: -.04em; }
+    .cta .button { flex-shrink: 0; color: var(--green-deep); background: #e2eddf; }
+    .cta .button:hover { background: var(--white); }
+
+    .footer { padding: 54px 0 24px; color: #d9e3dc; background: #102b2b; }
+    .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 50px; padding-bottom: 38px; }
+    .footer .brand-name { color: var(--white); }
+    .footer-copy { max-width: 290px; margin: 15px 0 0; color: #a9bbb0; font-size: 11px; line-height: 1.8; }
+    .footer h3 { margin: 3px 0 15px; color: var(--white); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+    .footer-links { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .footer-links a { color: #a9bbb0; font-size: 11px; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 18px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.13); color: #8fa499; font-size: 10px; }
+
+    @media (max-width: 900px) {
+      .nav-links { gap: 19px; }
+      .nav { gap: 18px; }
+      .search-fields { grid-template-columns: 1fr 1fr 1fr; }
+      .search-submit { grid-column: 1 / -1; }
+      .property-image { height: 195px; }
+      .property-info { padding-inline: 13px; }
+      .property-specs { gap: 9px; }
+      .trust-inner { grid-template-columns: repeat(3, 1fr); }
+      .trust-copy { grid-column: 1 / -1; max-width: 420px; }
+    }
+    @media (max-width: 680px) {
+      .shell { width: min(100% - 36px, 520px); }
+      .topline { height: 34px; font-size: 10px; }
+      .topline-note { gap: 6px; }
+      .nav { height: 70px; }
+      .brand-name { font-size: 22px; }
+      .nav-actions { gap: 12px; }
+      .nav-actions .button { min-height: 40px; padding: 0 12px; font-size: 10px; }
+      .sign-in { display: none; }
+      .menu-toggle { display: inline-flex; }
+      .nav-links {
+        position: absolute;
+        top: 62px;
+        right: 18px;
+        left: 18px;
+        display: none;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 16px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: var(--white);
+        box-shadow: 0 15px 35px rgba(28,48,39,.12);
+      }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links li a { display: block; padding: 13px 3px; border-bottom: 1px solid #f0f1ed; }
+      .nav-links li:last-child a { border-bottom: 0; }
+      .hero { min-height: 540px; }
+      .hero::before { background-position: 58% center; }
+      .hero::after { background: linear-gradient(90deg, rgba(13,37,35,.89), rgba(13,37,35,.52)); }
+      .hero-content { padding: 65px 0 115px; }
+      .hero h1 { font-size: clamp(47px, 12vw, 66px); }
+      .hero-copy { max-width: 370px; font-size: 13px; }
+      .search-wrap { margin-top: -62px; }
+      .search-panel { padding: 16px; }
+      .search-fields { grid-template-columns: 1fr 1fr; gap: 12px 10px; }
+      .search-submit { grid-column: 1 / -1; }
+      .field:first-child { grid-column: 1 / -1; }
+      .section { padding: 67px 0; }
+      .section-head { align-items: start; flex-direction: column; gap: 15px; margin-bottom: 24px; }
+      .section-head > .text-link { margin-top: 0; }
+      .property-grid { grid-template-columns: 1fr; gap: 14px; }
+      .property-card { display: grid; grid-template-columns: minmax(120px, 38%) 1fr; }
+      .property-image { height: 100%; min-height: 190px; }
+      .badge { top: 10px; left: 9px; padding: 6px 7px; font-size: 8px; }
+      .favorite { top: 8px; right: 8px; width: 30px; height: 30px; }
+      .property-info { padding: 13px 12px; }
+      .property-name { margin: 7px 0 10px; font-size: 18px; }
+      .property-specs { flex-wrap: wrap; gap: 7px 10px; font-size: 9px; }
+      .property-price { font-size: 18px; }
+      .property-price small { font-size: 9px; }
+      .details-link { font-size: 9px; }
+      .trust-inner { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+      .trust-stat { padding-left: 12px; }
+      .trust-stat strong { font-size: 24px; }
+      .trust-stat span { font-size: 9px; line-height: 1.5; }
+      .how-section { padding: 67px 0; }
+      .steps { grid-template-columns: 1fr; gap: 12px; }
+      .step { padding: 20px; }
+      .step h3 { margin: 14px 0 6px; }
+      .cta-inner { align-items: start; flex-direction: column; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 34px 22px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; gap: 8px; }
+    }
+    @media (max-width: 390px) {
+      .topline-note span { max-width: 210px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .nav-actions .button { display: none; }
+      .property-card { grid-template-columns: 112px 1fr; }
+      .property-image { min-height: 205px; }
+      .property-info { padding: 11px 10px; }
+      .property-specs { gap: 6px; }
+      .property-price-row { align-items: start; flex-direction: column; gap: 7px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
 </head>
-
 <body>
-  <div class="page-wrapper">
-
-    <div class="preloader"></div>
-
-    <!-- Back-to-top start -->
-    <div class="back-to-top-wrapper">
-      <button id="back_to_top" type="button" class="back-to-top-btn">
-        <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M11 6L6 1L1 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </button>
+  <div class="topline">
+    <div class="shell topline-inner">
+      <div class="topline-note">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span>Thoughtful homes, right here in Dhaka</span>
+      </div>
+      <a class="topline-link" href="#contact">Need a hand? Talk to our team <span aria-hidden="true">→</span></a>
     </div>
-    <!-- Back-to-top start -->
+  </div>
 
-    <!-- Main Header-->
-    <header class="main-header header-style-two">
-      <div class="header-lower ">
-        <div class="inner-container">
-          <!-- Main box -->
-          <div class="main-box">
-            <div class="left-box">
-              <div class="logo-box">
-                <div class="logo one">
-                  <a href="index.html"><img src="images/logo3.png" alt="Logo" /></a>
-                </div>
-                <div class="logo two">
-                  <a href="index.html"><img src="images/logo2.png" alt="Logo" /></a>
-                </div>
-              </div>
-              <!--Nav Box-->
-              <div class="nav-outer">
-                <nav class="nav main-menu">
-                  <ul class="navigation">
-                    <li class="current dropdown">
-                      <a href="index.html">Home</a>
-                      <ul>
-                        <li><a href="index.html">Home 01</a></li>
-                        <li><a href="index-2.html">Home 02</a></li>
-                        <li><a href="index-3.html">Home 03</a></li>
-                      </ul>
-                    </li>
-                    <li class="dropdown"><a href="#">Pages</a>
-                      <ul>
-                        <li><a href="page-about.html">About Us</a></li>
-                        <li class="dropdown"><a href="#">Team</a>
-                          <ul>
-                            <li><a href="page-team.html">Team Grid</a></li>
-                            <li><a href="page-team-details.html">Team Details</a></li>
-                          </ul>
-                        </li>
-                        <li><a href="page-pricing.html">Pricing</a></li>
-                        <li><a href="page-testimonial.html">Testimonials</a></li>
-                        <li><a href="page-faq.html">Faq</a></li>
-                        <li><a href="page-contact.html">Contact</a></li>
-                        <li class="dropdown"><a href="#">Shop</a>
-                          <ul>
-                            <li><a href="shop-products.html">Products</a></li>
-                            <li><a href="shop-products-sidebar.html">Products with Sidebar</a></li>
-                            <li><a href="shop-product-details.html">Product Details</a></li>
-                            <li><a href="shop-cart.html">Cart</a></li>
-                            <li><a href="shop-checkout.html">Checkout</a></li>
-                          </ul>
-                        </li>
-                        <li><a href="page-404.html">404</a></li>
-                      </ul>
-                    </li>
-                    <li class="dropdown"><a href="#">Services</a>
-                      <ul>
-                        <li><a href="page-services.html">Services Grid</a></li>
-                        <li><a href="page-service-details.html">Services Details</a></li>
-                      </ul>
-                    </li>
-                    <li class="dropdown"><a href="#">Projects</a>
-                    <ul>
-                      <li><a href="page-projects.html">Project Grid</a></li>
-                      <li><a href="page-project-details.html">Project Details</a></li>
-                    </ul>
-                  </li>
-                    <li class="dropdown"><a href="#">News</a>
-                      <ul>
-                        <li><a href="news-grid.html">News Grid</a></li>
-                        <li><a href="news-details.html">News Details</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
+  <header class="header">
+    <nav class="shell nav" aria-label="Main navigation">
+      <a class="brand" href="#" aria-label="EstateFlow home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="m3.5 11 8.5-7 8.5 7v9.5h-6v-6h-5v6h-6V11Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 9.2V7h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </span>
+        <span class="brand-name">Estate<span>Flow</span></span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#" aria-current="page">Home</a></li>
+        <li><a href="#properties">Properties</a></li>
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="sign-in" href="#contact">Sign in</a>
+        <a class="button" href="#properties">Explore homes <span aria-hidden="true">↗</span></a>
+        <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-links">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="shell">
+        <div class="hero-content">
+          <p class="eyebrow">A better way to find home</p>
+          <h1 id="hero-title">A place for your <em>next chapter.</em></h1>
+          <p class="hero-copy">Discover thoughtfully selected homes, honest guidance, and a smoother path to the place that feels like yours.</p>
+          <div class="hero-proof">
+            <span class="proof-stars" aria-hidden="true">✦</span>
+            <span>Thoughtful homes, local guidance, <strong>clear next steps</strong></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="shell search-wrap">
+      <form class="search-panel" id="property-search" role="search">
+        <div class="search-tabs" role="tablist" aria-label="Listing type">
+          <button class="search-tab" type="button" role="tab" aria-selected="true" data-mode="buy">Buy</button>
+          <button class="search-tab" type="button" role="tab" aria-selected="false" data-mode="rent">Rent</button>
+        </div>
+        <div class="search-fields">
+          <div class="field">
+            <label for="location">Location</label>
+            <div class="input-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="10" r="2.2" stroke="currentColor" stroke-width="1.6"/></svg>
+              <input id="location" name="location" type="search" placeholder="Area or neighborhood">
             </div>
+          </div>
+          <div class="field">
+            <label for="property-type">Property type</label>
+            <div class="input-wrap">
+              <select id="property-type" name="type">
+                <option value="">All property types</option>
+                <option value="apartment">Apartment</option>
+                <option value="house">House</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="budget">Maximum budget</label>
+            <div class="input-wrap">
+              <select id="budget" name="budget">
+                <option value="">Any budget</option>
+                <option value="10000000">Up to ৳1 crore</option>
+                <option value="20000000">Up to ৳2 crore</option>
+                <option value="30000000">Up to ৳3 crore</option>
+              </select>
+            </div>
+          </div>
+          <button class="button search-submit" type="submit">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Find a home
+          </button>
+        </div>
+      </form>
+    </div>
 
-            <div class="right-box">
-              <a class="theme-btn btn-style-four" href="page-about.html">
-                <span class="icon">
-                  <i class="fa-solid fa-arrow-right"></i>
-                  <i class="fa-solid fa-arrow-right"></i>
-                </span>
-                <span class="btn-title">Read More</span>
-              </a>
-              <!--Mobile Navigation Toggler-->
-              <button class="mobile-nav-toggler">
-                <span></span>
-                <span></span>
-                <span></span>
+    <section class="section" id="properties" aria-labelledby="properties-title">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Handpicked for you</p>
+            <h2 class="section-title" id="properties-title">Homes worth coming home to.</h2>
+            <p class="section-description">A few places we think you’ll love, selected for their character, comfort, and location.</p>
+          </div>
+          <a class="text-link" href="#properties">View all properties <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="listing-meta" aria-live="polite">
+          <span id="results-count">Showing 3 handpicked homes</span>
+          <span>Dhaka, Bangladesh</span>
+        </div>
+        <div class="property-grid" id="property-grid">
+          <article class="property-card" data-mode="buy" data-type="apartment" data-price="18500000" data-location="gulshan gulshan 2 dhaka">
+            <div class="property-image">
+              <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=900&q=82" alt="Sunlit modern apartment living room with warm wood details" loading="lazy">
+              <span class="badge">For sale</span>
+              <button class="favorite" type="button" aria-label="Save Gulshan Garden Residence" aria-pressed="false">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 8.8c0 5.2-8.8 10-8.8 10s-8.8-4.8-8.8-10A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
               </button>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mobile Menu  -->
-      <div class="mobile-menu">
-        <div class="menu-backdrop"></div>
-        <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
-        <nav class="menu-box">
-          <div class="upper-box">
-            <div class="nav-logo">
-              <a href="index.html"><img src="images/logo3.png" alt="" /></a>
-            </div>
-            <div class="close-btn"><i class="icon fa fa-times"></i></div>
-          </div>
-          <ul class="navigation clearfix">
-            <!--Keep This Empty / Menu will come through Javascript-->
-          </ul>
-          <ul class="contact-list-one">
-            <li>
-              <i class="icon fa-regular fa-envelope"></i>
-              <span class="title">Send Email</span>
-              <div class="text"><a href="mailto:nedhelp@example.com">needhelp@company.com</a></div>
-            </li>
-          </ul>
-          <ul class="social-links">
-            <li>
-              <a href="#"><i class="icon fab fa-twitter"></i></a>
-            </li>
-            <li>
-              <a href="#"><i class="icon fab fa-facebook-f"></i></a>
-            </li>
-            <li>
-              <a href="#"><i class="icon fab fa-pinterest-p"></i></a>
-            </li>
-            <li>
-              <a href="#"><i class="icon fab fa-vimeo-v"></i></a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <!-- End Mobile Menu -->
-
-      <!-- Header Search -->
-      <div class="search-popup">
-        <span class="search-back-drop"></span>
-        <button class="close-search"><span class="fa fa-times"></span></button>
-
-        <div class="search-inner">
-          <form method="post" action="index.html">
-            <div class="form-group">
-              <input type="search" name="search-field" value="" placeholder="Search..." required="" />
-              <button type="submit"><i class="fa fa-search"></i></button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <!-- End Header Search -->
-
-      <!-- Sticky Header  -->
-      <div class="sticky-header">
-        <div class="auto-container">
-          <div class="inner-container">
-            <!--Logo-->
-            <div class="logo">
-              <a href="index.html"><img src="images/logo2.png" alt=""></a>
-            </div>
-
-            <!--Right Col-->
-            <div class="nav-outer">
-              <!-- Main Menu -->
-              <nav class="main-menu">
-                <div class="navbar-collapse show collapse clearfix">
-                  <ul class="navigation clearfix">
-                    <!--Keep This Empty / Menu will come through Javascript-->
-                  </ul>
-                </div>
-              </nav>
-              <!-- Main Menu End-->
-
-              <!--Mobile Navigation Toggler-->
-              <div class="mobile-nav-toggler">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="property-info">
+              <div class="property-place"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2" stroke="currentColor" stroke-width="1.7"/></svg> Gulshan 2, Dhaka</div>
+              <h3 class="property-name">Gulshan Garden Residence</h3>
+              <div class="property-specs">
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 19V9m0 7h18v3M5 16v-5h6a3 3 0 0 1 3 3v2m1 0v-4h3a3 3 0 0 1 3 3v1M3 11h2a3 3 0 0 1 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 3 beds</span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16v6H4zM7 12V8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v4m-9 6v2m18-2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 3 baths</span>
+                <span>1,850 sqft</span>
+              </div>
+              <div class="property-price-row">
+                <div class="property-price">৳1.85 crore <small>/ sale</small></div>
+                <a class="details-link" href="#contact">Details <span aria-hidden="true">↗</span></a>
               </div>
             </div>
-            
-            <a href="tel:017-50050088" class="header-phone_box">
-              <span class="icon"><i aria-hidden="true" class="fas fa-phone-alt"></i></span>
-              <span class="info">
-                Call Anytime
-                <strong>017-50050088</strong>
-              </span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- End Sticky Menu -->
-    </header>
-    <!--End Main Header -->
+          </article>
 
-    <!-- start banner-section -->
-    <section class="banner-section-two">
-      <div class="outer-box">
-        <div class="banner-bg-box">
-          <div class="swiper-container banner-h2-slider pb-0">
-            <div class="swiper-wrapper">
-              <div class="banner-bg swiper-slide"><img src="images/banner/banner2-1.jpg" alt=""></div>
-              <div class="banner-bg swiper-slide"><img src="images/banner/banner2-2.jpg" alt=""></div>
-              <div class="banner-bg swiper-slide"><img src="images/banner/banner2-1.jpg" alt=""></div>
-              <div class="banner-bg swiper-slide"><img src="images/banner/banner2-2.jpg" alt=""></div>
+          <article class="property-card" data-mode="buy" data-type="house" data-price="27800000" data-location="bashundhara bashundhara r/a dhaka">
+            <div class="property-image">
+              <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=82" alt="Contemporary family home framed by a leafy garden" loading="lazy">
+              <span class="badge">For sale</span>
+              <button class="favorite" type="button" aria-label="Save Bashundhara Courtyard Home" aria-pressed="false">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 8.8c0 5.2-8.8 10-8.8 10s-8.8-4.8-8.8-10A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+              </button>
             </div>
-          </div>
-        </div>
-        <div class="banner-content">
-          <div class="auto-container">
-            <div class="row">
-              <div class="banner-block-two col-xl-8">
-                <div class="inner-block">
-                  <div class="h1 title wow fadeInUp" data-wow-delay="200ms">Building Tomorrow with Unmatched Quality</div>
-                  <div class="text wow fadeInUp" data-wow-delay="400ms">We create iconic real estate developments that provide enduring value to investors and communities</div>
-                  <a class="theme-btn btn-style-four wow fadeInUp" data-wow-delay="600ms" href="page-contact.html">
-                    <span class="icon">
-                      <i class="fa-solid fa-arrow-right"></i>
-                      <i class="fa-solid fa-arrow-right"></i>
-                    </span>
-                    <span class="btn-title">Get Started</span>
-                  </a>
-                </div>
+            <div class="property-info">
+              <div class="property-place"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2" stroke="currentColor" stroke-width="1.7"/></svg> Bashundhara R/A, Dhaka</div>
+              <h3 class="property-name">Bashundhara Courtyard Home</h3>
+              <div class="property-specs">
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 19V9m0 7h18v3M5 16v-5h6a3 3 0 0 1 3 3v2m1 0v-4h3a3 3 0 0 1 3 3v1M3 11h2a3 3 0 0 1 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4 beds</span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16v6H4zM7 12V8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v4m-9 6v2m18-2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4 baths</span>
+                <span>2,400 sqft</span>
+              </div>
+              <div class="property-price-row">
+                <div class="property-price">৳2.78 crore <small>/ sale</small></div>
+                <a class="details-link" href="#contact">Details <span aria-hidden="true">↗</span></a>
               </div>
             </div>
-          </div>
-          <div class="feature-box">
-            <div class="auto-container">
-              <div class="row gx-3">
-                <div class="feature-block col-xl-4 col-md-6">
-                  <div class="inner-block">
-                    <div class="icon"><i class="flaticon-set-building-plan"></i></div>
-                     <div class="h4 title">Research & Planning</div>
-                    <div class="text">Our diverse community spans the globe, bringing together</div>
-                  </div>
-                </div>
-                <div class="feature-block col-xl-4 col-md-6">
-                  <div class="inner-block">
-                    <div class="icon"><i class="flaticon-set-building-2"></i></div>
-                     <div class="h4 title">Design & Development </div>
-                    <div class="text">Our diverse community spans the globe, bringing together</div>
-                  </div>
-                </div>
-                <div class="feature-block col-xl-4 col-md-6">
-                  <div class="inner-block">
-                    <div class="icon"><i class="flaticon-set-investment"></i></div>
-                     <div class="h4 title">Quality Checking </div>
-                    <div class="text">Our diverse community spans the globe, bringing together</div>
-                  </div>
-                </div>
+          </article>
+
+          <article class="property-card" data-mode="buy" data-type="apartment" data-price="9800000" data-location="dhanmondi dhanmondi 8a dhaka">
+            <div class="property-image">
+              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=82" alt="Bright contemporary apartment with a quiet, neutral interior" loading="lazy">
+              <span class="badge">For sale</span>
+              <button class="favorite" type="button" aria-label="Save Dhanmondi Light-Filled Apartment" aria-pressed="false">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 8.8c0 5.2-8.8 10-8.8 10s-8.8-4.8-8.8-10A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            <div class="property-info">
+              <div class="property-place"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2" stroke="currentColor" stroke-width="1.7"/></svg> Dhanmondi 8A, Dhaka</div>
+              <h3 class="property-name">Dhanmondi Light-Filled Apartment</h3>
+              <div class="property-specs">
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 19V9m0 7h18v3M5 16v-5h6a3 3 0 0 1 3 3v2m1 0v-4h3a3 3 0 0 1 3 3v1M3 11h2a3 3 0 0 1 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 2 beds</span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16v6H4zM7 12V8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v4m-9 6v2m18-2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 2 baths</span>
+                <span>1,120 sqft</span>
+              </div>
+              <div class="property-price-row">
+                <div class="property-price">৳98 lakh <small>/ sale</small></div>
+                <a class="details-link" href="#contact">Details <span aria-hidden="true">↗</span></a>
               </div>
             </div>
+          </article>
+          <article class="property-card" data-mode="rent" data-type="apartment" data-price="75000" data-location="uttara uttara 11 dhaka">
+            <div class="property-image">
+              <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=82" alt="Comfortable apartment living area with natural light" loading="lazy">
+              <span class="badge">For rent</span>
+              <button class="favorite" type="button" aria-label="Save Uttara Greenview Apartment" aria-pressed="false">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 8.8c0 5.2-8.8 10-8.8 10s-8.8-4.8-8.8-10A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            <div class="property-info">
+              <div class="property-place"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2" stroke="currentColor" stroke-width="1.7"/></svg> Uttara 11, Dhaka</div>
+              <h3 class="property-name">Uttara Greenview Apartment</h3>
+              <div class="property-specs">
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 19V9m0 7h18v3M5 16v-5h6a3 3 0 0 1 3 3v2m1 0v-4h3a3 3 0 0 1 3 3v1M3 11h2a3 3 0 0 1 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 3 beds</span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16v6H4zM7 12V8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v4m-9 6v2m18-2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 2 baths</span>
+                <span>1,450 sqft</span>
+              </div>
+              <div class="property-price-row">
+                <div class="property-price">৳75,000 <small>/ month</small></div>
+                <a class="details-link" href="#contact">Details <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+          <div class="empty-state" id="empty-state">
+            <strong>No homes found just yet.</strong>
+            Try a different area or broaden your search filters.
           </div>
         </div>
       </div>
     </section>
-    <!-- end banner-section-h1 -->
 
-    <!-- start about-section-two -->
-    <section class="about-section-two">
-      <div class="shape-1 bounce-x"><img src="images/icons/shape-13.png" alt=""></div>
-      <div class="auto-container">
-        <div class="row">
-          <div class="content-column col-lg-7">
-            <div class="inner-column wow fadeInUp" data-wow-delay="200ms">
-              <div class="sec-title">
-                 <div class="h6 sub-title">Who we are</div>
-                 <div class="h2 title char-animation">The foremost privately held firm in global real estate investment</div>
-              </div>
-              <div class="bottom-box">
-                <div class="inner-box">
-                  <div class="counter-box">
-                    <div class="icon"><img src="images/icons/shape-12.png" alt=""></div>
-                     <div class="h2 count-box">
-                      <span class="count-text" data-speed="1500" data-stop="15">0</span><sup>+</sup>
-                    </div>
-                     <div class="h4 title">Years Of Experience</div>
-                  </div>
-                  <div class="image"><img src="images/resource/about2-1.jpg" alt=""></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="image-column col-lg-5">
-            <div class="inner-column wow fadeInUp" data-wow-delay="400ms">
-              <div class="image"><img src="images/resource/about2-2.jpg" alt=""></div>
-              <div class="text">Lorem ipsum dolor sit amet consectetur. Ac purus pharetra est et. Dictum donec urna vitae in nibh. Pharetra id rhoncus eu viverra morbi maecenas aliquet in.</div>
-            </div>
-          </div>
+    <section class="trust-band" aria-label="EstateFlow at a glance">
+      <div class="shell trust-inner">
+        <div class="trust-copy"><strong>Good decisions start with good information.</strong>Explore homes, arrange a visit, and take your next step with confidence.</div>
+        <div class="trust-stat"><strong>Find</strong><span>a home that fits your life</span></div>
+        <div class="trust-stat"><strong>Visit</strong><span>with helpful local guidance</span></div>
+        <div class="trust-stat"><strong>Settle</strong><span>in with a clearer next step</span></div>
+      </div>
+    </section>
+
+    <section class="how-section" id="how-it-works" aria-labelledby="how-title">
+      <div class="shell">
+        <div class="how-intro">
+          <p class="section-kicker">Simple from the start</p>
+          <h2 class="section-title" id="how-title">Your next home, in three steps.</h2>
+          <p class="section-description">A clearer, more considered way to move from looking to feeling at home.</p>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <span class="step-number">01</span>
+            <h3>Find your fit</h3>
+            <p>Explore homes by neighborhood, price, and the details that matter most to you.</p>
+          </article>
+          <article class="step">
+            <span class="step-number">02</span>
+            <h3>Take a closer look</h3>
+            <p>Save the places you love and arrange a visit with a local property specialist.</p>
+          </article>
+          <article class="step">
+            <span class="step-number">03</span>
+            <h3>Make yourself at home</h3>
+            <p>Get thoughtful guidance through the next steps, right up to the keys in your hand.</p>
+          </article>
         </div>
       </div>
     </section>
-    <!-- end about-section-two -->
 
-    <!-- Services Section -->
-    <section class="services-section">
-      <div class="shape-1"><img src="images/icons/shape-14.png" alt=""></div>
-      <div class="auto-container">
-        <div class="sec-title text-center">
-           <div class="h6 sub-title">what We do</div>
-           <div class="h2 title char-animation">Explore our services</div>
+    <section class="cta" id="contact">
+      <div class="shell cta-inner">
+        <div>
+          <p class="section-kicker">A good move starts with a conversation</p>
+          <h2>Tell us what home looks like for you.</h2>
         </div>
-        <div class="row gx-3">
-          <div class="col-xl-4 col-md-6">
-            <div class="service-block wow fadeInUp" data-wow-delay="200ms">
-              <div class="inner-block">
-                <div class="image">
-                  <img src="images/resource/service1-1.jpg" alt="">
-                  <img src="images/resource/service1-1.jpg" alt="">
-                  <div class="icon"><i class="flaticon-set-investment"></i></div>
-                </div>
-                <div class="content">
-                   <div class="h4 title"><a href="page-service-details.html">Property Buying & <br>Selling</a></div>
-                  <a class="btn-service-style" href="page-contact.html">Get Free Quote <i class="icon-arrow far fa-chevron-right"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 col-md-6">
-            <div class="service-block wow fadeInUp" data-wow-delay="400ms">
-              <div class="inner-block">
-                <div class="image">
-                  <img src="images/resource/service1-2.jpg" alt="">
-                  <img src="images/resource/service1-2.jpg" alt="">
-                  <div class="icon"><i class="flaticon-set-building-2"></i></div>
-                </div>
-                <div class="content">
-                   <div class="h4 title"><a href="page-service-details.html">Property Rentals <br>Services </a></div>
-                  <a class="btn-service-style" href="page-contact.html">Get Free Quote <i class="icon-arrow far fa-chevron-right"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 col-md-6">
-            <div class="service-block wow fadeInUp" data-wow-delay="600ms">
-              <div class="inner-block">
-                <div class="image">
-                  <img src="images/resource/service1-3.jpg" alt="">
-                  <img src="images/resource/service1-3.jpg" alt="">
-                  <div class="icon"><i class="flaticon-set-location"></i></div>
-                </div>
-                <div class="content">
-                   <div class="h4 title"><a href="page-service-details.html">Property <br>Management</a></div>
-                  <a class="btn-service-style" href="page-contact.html">Get Free Quote <i class="icon-arrow far fa-chevron-right"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <a class="button" href="mailto:hello@estateflow.example">Talk to our team <span aria-hidden="true">↗</span></a>
       </div>
     </section>
-    <!-- End Services Section -->
+  </main>
 
-    <!-- start why-choose-us-section-two -->
-    <section class="why-choose-us-section-two">
-      <div class="bg-shape"><img src="images/icons/shape-15.png" alt=""></div>
-      <div class="auto-container">
-        <div class="sec-title light text-center">
-           <div class="h6 sub-title">Why choose Us</div>
-           <div class="h2 title char-animation">What Makes Our Company Most Deferent</div>
-        </div>
-        <div class="row">
-          <div class="image-column col-xl-6">
-            <div class="inner-column">
-              <div class="image wow reveal-top tm-gsap-img-parallax overflow-hidden"><img src="images/resource/wcu2-1.jpg" alt=""></div>
-              <div class="icon-box">
-                <div class="icon"><img src="images/icons/wcu2-1.png" alt=""></div>
-                <span>
-                  <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <path id="circlePath" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"></path>
-                    </defs>
-                    <text letter-spacing="6" text-anchor="middle">
-                      <textPath href="#circlePath" startOffset="50%">
-                        25 years of experience-25 years of experience         </textPath>
-                    </text>
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="content-column col-xl-6">
-            <div class="inner-column">
-              <div class="why-choose-us-block">
-                <div class="inner-block">
-                  <div class="icon"><i class="flaticon-set-residential"></i></div>
-                  <div class="content">
-                     <div class="h4 title">Research & Planning</div>
-                    <div class="text">Develop high-quality, engaging content tailored to your audience. Post regularly, engage </div>
-                  </div>
-                </div>
-              </div>
-              <div class="why-choose-us-block">
-                <div class="inner-block">
-                  <div class="icon"><i class="flaticon-set-agreement"></i></div>
-                  <div class="content">
-                     <div class="h4 title">Design & Development Idea</div>
-                    <div class="text">Develop high-quality, engaging content tailored to your audience. Post regularly, engage </div>
-                  </div>
-                </div>
-              </div>
-              <div class="why-choose-us-block">
-                <div class="inner-block">
-                  <div class="icon"><i class="flaticon-set-property-1"></i></div>
-                  <div class="content">
-                     <div class="h4 title">Testing & Quality Checking</div>
-                    <div class="text">Develop high-quality, engaging content tailored to your audience. Post regularly, engage </div>
-                  </div>
-                </div>
-              </div>
-              <div class="why-choose-us-block">
-                <div class="inner-block">
-                  <div class="icon"><i class="flaticon-set-architecture"></i></div>
-                  <div class="content">
-                     <div class="h4 title">Project Delivered</div>
-                    <div class="text">Develop high-quality, engaging content tailored to your audience. Post regularly, engage </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- end why-choose-us-section-two -->
-
-    <!-- start video-section -->
-    <section class="video-section">
-      <div class="outer-box">
-        <div class="bg-image"><img src="images/resource/video1-1.jpg" alt=""></div>
-        <div class="video-box wow fadeInUp" data-wow-delay="400ms">
-          <a class="play-now-one play-now" href="https://www.youtube.com/watch?v=hddwAIXbKZo" data-fancybox="gallery" data-caption="">
-            <i class="fa-sharp fa-solid fa-play"></i>
+  <footer class="footer">
+    <div class="shell">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="brand" href="#" aria-label="EstateFlow home">
+            <span class="brand-mark" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="m3.5 11 8.5-7 8.5 7v9.5h-6v-6h-5v6h-6V11Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 9.2V7h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            <span class="brand-name">Estate<span>Flow</span></span>
           </a>
-           <div class="h2 title">Global Real Estate <br>Investment.</div>
+          <p class="footer-copy">A more thoughtful way to find, manage, and feel at home in the places that matter.</p>
+        </div>
+        <div>
+          <h3>Explore</h3>
+          <ul class="footer-links">
+            <li><a href="#properties">Properties</a></li>
+            <li><a href="#how-it-works">How it works</a></li>
+            <li><a href="#contact">List your property</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Get in touch</h3>
+          <ul class="footer-links">
+            <li><a href="mailto:hello@estateflow.example">hello@estateflow.example</a></li>
+            <li><a href="#contact">Dhaka, Bangladesh</a></li>
+            <li><a href="#contact">Contact our team</a></li>
+          </ul>
         </div>
       </div>
-    </section>
-    <!-- end video-section -->
-
-
-    <!-- Project Section -->
-    <section class="project-section-two">
-      <div class="shape-1 bounce-y"><img src="images/icons/shape-16.png" alt=""></div>
-      <div class="auto-container">
-        <div class="sec-title text-center">
-           <div class="h6 sub-title">Our Projects</div>
-           <div class="h2 title">Showcasing Your Projects</div>
-        </div>
-        <div class="row gx-3">
-          <div class="col-md-6">
-            <div class="project-box1 wow fadeInUp" data-wow-delay=".1s">
-              <div class="inner-box">
-                <div class="thumb">
-                  <img src="images/resource/project1-1.jpg" alt="img">
-                  <img src="images/resource/project1-1.jpg" alt="img">
-                  <a href="page-project-details.html" class="arrow-icon"><i class="fa-solid fa-arrow-right"></i></a>
-                  <div class="tag">Cornerstone</div>
-                </div>
-                <div class="content">
-                  <div class="catogory-box"><a href="page-project-details.html">Tokyo, Japan</a></div>
-                   <div class="h4 title"><a href="page-project-details.html">Vista Residences at Councill Square</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="project-box1 wow fadeInUp" data-wow-delay=".2s">
-              <div class="inner-box">
-                <div class="thumb">
-                  <img src="images/resource/project1-2.jpg" alt="img">
-                  <img src="images/resource/project1-2.jpg" alt="img">
-                  <a href="page-project-details.html" class="arrow-icon"><i class="fa-solid fa-arrow-right"></i></a>
-                  <div class="tag">Foundation</div>
-                </div>
-                <div class="content">
-                  <div class="catogory-box"><a href="page-project-details.html">Miami, Florida</a></div>
-                   <div class="h4 title"><a href="page-project-details.html">Councill Square Panorama Residences</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="project-box1 wow fadeInUp" data-wow-delay=".3s">
-              <div class="inner-box">
-                <div class="thumb">
-                  <img src="images/resource/project1-3.jpg" alt="img">
-                  <img src="images/resource/project1-3.jpg" alt="img">
-                  <a href="page-project-details.html" class="arrow-icon"><i class="fa-solid fa-arrow-right"></i></a>
-                  <div class="tag">Pinnacle</div>
-                </div>
-                <div class="content">
-                  <div class="catogory-box"><a href="page-project-details.html">Paris, France</a></div>
-                   <div class="h4 title"><a href="page-project-details.html">The Grand Vista at Councill Square</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="project-box1 wow fadeInUp" data-wow-delay=".4s">
-              <div class="inner-box">
-                <div class="thumb">
-                  <img src="images/resource/project1-4.jpg" alt="img">
-                  <img src="images/resource/project1-4.jpg" alt="img">
-                  <a href="page-project-details.html" class="arrow-icon"><i class="fa-solid fa-arrow-right"></i></a>
-                  <div class="tag">Sanctum</div>
-                </div>
-                <div class="content">
-                  <div class="catogory-box"><a href="page-project-details.html">London, UK</a></div>
-                   <div class="h4 title"><a href="page-project-details.html">Apartment Complex</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="footer-bottom">
+        <span>© 2026 EstateFlow. Made for finding your place.</span>
+        <span>Thoughtful homes. Clear next steps.</span>
       </div>
-    </section>
-    <!-- End Project Section -->
+    </div>
+  </footer>
 
-    <!-- start team section two -->
-    <section class="team-section-two pt-0">
-      <div class="auto-container">
-        <div class="sec-title-box">
-          <div class="sec-title">
-             <div class="h6 sub-title">Our Leaders</div>
-             <div class="h2 title">Get to Know our leader ship team</div>
-          </div>
-          <a class="theme-btn btn-style-two" href="page-team.html">
-            <span class="icon">
-              <i class="fa-solid fa-arrow-right"></i>
-              <i class="fa-solid fa-arrow-right"></i>
-            </span>
-            <span class="btn-title">Reed More</span>
-          </a>
-        </div>
-        <div class="row gx-4">
-          <div class="team-block col-lg-4 col-md-6">
-            <div class="inner-block">
-              <div class="images-box">
-                <div class="image"><img src="images/resource/team1-2.png" alt=""></div>
-                <svg class="shape" width="304" height="543" viewBox="0 0 304 543" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M304 0H103.746L0 288.319H86.8571L14.4762 543L265.397 192.212H176.127L304 0Z"></path>
-                </svg>
-                <ul class="social-link">
-                  <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-                  <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                  <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                </ul>
-              </div>
-              <div class="author-info">
-                <div class="inner-box">
-                   <div class="h4 name"><a href="page-team-details.html">Ralph Edwards</a></div>
-                  <div class="designation">Chief Executive</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="team-block col-lg-4 col-md-6">
-            <div class="inner-block">
-              <div class="images-box">
-                <div class="image"><img src="images/resource/team1-3.png" alt=""></div>
-                <svg class="shape" width="304" height="543" viewBox="0 0 304 543" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M304 0H103.746L0 288.319H86.8571L14.4762 543L265.397 192.212H176.127L304 0Z"></path>
-                </svg>
-                <ul class="social-link">
-                  <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-                  <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                  <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                </ul>
-              </div>
-              <div class="author-info">
-                <div class="inner-box">
-                   <div class="h4 name"><a href="page-team-details.html">Wade Worren</a></div>
-                  <div class="designation">Principal & CEO</div>
-                </div>  
-              </div>
-            </div>
-          </div>
-          <div class="team-block col-lg-4 col-md-6">
-            <div class="inner-block">
-              <div class="images-box">
-                <div class="image"><img src="images/resource/team1-4.png" alt=""></div>
-                <svg class="shape" width="304" height="543" viewBox="0 0 304 543" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M304 0H103.746L0 288.319H86.8571L14.4762 543L265.397 192.212H176.127L304 0Z"></path>
-                </svg>
-                <ul class="social-link">
-                  <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-                  <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                  <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                </ul>
-              </div>
-              <div class="author-info">
-                <div class="inner-box">
-                   <div class="h4 name"><a href="page-team-details.html">Albert Flores</a></div>
-                  <div class="designation">Ceo-Founder</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- end team section two -->
+  <script>
+    (() => {
+      const searchForm = document.querySelector("#property-search");
+      const locationInput = document.querySelector("#location");
+      const typeSelect = document.querySelector("#property-type");
+      const budgetSelect = document.querySelector("#budget");
+      const cards = [...document.querySelectorAll(".property-card")];
+      const resultCount = document.querySelector("#results-count");
+      const emptyState = document.querySelector("#empty-state");
+      const tabs = [...document.querySelectorAll(".search-tab")];
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navLinks = document.querySelector("#nav-links");
+      const budgetLabel = document.querySelector('label[for="budget"]');
+      let listingMode = "buy";
 
-    <!-- start testimonial section -->
-    <section class="testimonial-section-two">
-      <div class="outer-box">
-        <div class="shape-1"><img src="images/icons/shape-17.png" alt=""></div>
-        <div class="auto-container">
-          <div class="sec-title-box">
-            <div class="sec-title light">
-               <div class="h6 sub-title">Customer Feedback</div>
-               <div class="h2 title char-animation">Hear What Others Say About Partnering With Us</div>
-            </div>
-            <div class="arrow-box">
-              <div class="testi-slide-prev"><i class="fa-solid fa-arrow-left"></i></div>
-              <div class="testi-slide-next"><i class="fa-solid fa-arrow-right"></i></div>
-            </div>
-          </div>
-          <div class="swiper-container testi-h1-slider pb-0  overflow-hidden">
-            <div class="swiper-wrapper">
-              <div class="testimonial-block swiper-slide">
-                <div class="inner-block style-two">
-                  <div class="quote-icon"><i class="fa-solid fa-quote-right"></i></div>
-                  <div class="image-box">
-                    <div class="inner-box">
-                      <div class="image"><img src="images/resource/testi1-1.jpg" alt=""></div>
-                      <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="content-box">
-                    <div class="inner-box">
-                      <div class="text">“ I cannot say enough good things about the team at Softeck. They took our vision and turned it into a stunning website.”</div>
-                      <div class="author-info">
-                         <div class="h4 name"><a href="page-testimonial.html">Tina Brown</a></div>
-                        <div class="designation">Designer</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="testimonial-block swiper-slide">
-                <div class="inner-block style-two">
-                  <div class="quote-icon"><i class="fa-solid fa-quote-right"></i></div>
-                  <div class="image-box">
-                    <div class="inner-box">
-                      <div class="image"><img src="images/resource/testi1-2.jpg" alt=""></div>
-                      <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="content-box">
-                    <div class="inner-box">
-                      <div class="text">“ I cannot say enough good things about the team at Softeck. They took our vision and turned it into a stunning website.”</div>
-                      <div class="author-info">
-                         <div class="h4 name"><a href="page-testimonial.html">Joan Cooper</a></div>
-                        <div class="designation">Clients of Company</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="testimonial-block swiper-slide">
-                <div class="inner-block style-two">
-                  <div class="quote-icon"><i class="fa-solid fa-quote-right"></i></div>
-                  <div class="image-box">
-                    <div class="inner-box">
-                      <div class="image"><img src="images/resource/testi1-3.jpg" alt=""></div>
-                      <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="content-box">
-                    <div class="inner-box">
-                      <div class="text">“ I cannot say enough good things about the team at Softeck. They took our vision and turned it into a stunning website.”</div>
-                      <div class="author-info">
-                         <div class="h4 name"><a href="page-testimonial.html">David Smith</a></div>
-                        <div class="designation">Designer</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="testi-slider-dots"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- end testimonial section -->
+      const updateBudgetOptions = () => {
+        const options = listingMode === "rent"
+          ? [
+              ["", "Any monthly rent"],
+              ["50000", "Up to ৳50,000 / month"],
+              ["100000", "Up to ৳1 lakh / month"],
+              ["150000", "Up to ৳1.5 lakh / month"]
+            ]
+          : [
+              ["", "Any budget"],
+              ["10000000", "Up to ৳1 crore"],
+              ["20000000", "Up to ৳2 crore"],
+              ["30000000", "Up to ৳3 crore"]
+            ];
+        budgetSelect.replaceChildren(...options.map(([value, label]) => {
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = label;
+          return option;
+        }));
+        budgetLabel.textContent = listingMode === "rent" ? "Maximum monthly rent" : "Maximum budget";
+      };
 
-    <!-- start blog-section -->
-    <section class="blog-section-two pt-0 pb-0">
-      <div class="outer-box">
-        <div class="shape-1 bounce-y"><img src="images/icons/shape-18.png" alt=""></div>
-        <div class="auto-container">
-          <div class="sec-title text-center">
-             <div class="h6 sub-title">News & Articles</div>
-             <div class="h2 title">Experience new inspirations and movements</div>
-          </div>
-          <div class="row gx-3">
-            <div class="blog-block col-xl-4 col-md-6">
-              <div class="inner-block">
-                <div class="image-box">
-                  <div class="image">
-                    <img src="images/resource/blog1-1.jpg" alt="">
-                    <img src="images/resource/blog1-1.jpg" alt="">
-                  </div>
-                  <a href="news-details.html" class="icon"><i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                <div class="content">
-                  <div class="sub-title"><span>December 7, 2025</span>No Comments</div>
-                   <div class="h4 title"><a href="news-details.html">Converting Clicks into Clients: Strategies from Agencies</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="blog-block col-xl-4 col-md-6">
-              <div class="inner-block">
-                <div class="image-box">
-                  <div class="image">
-                    <img src="images/resource/blog1-2.jpg" alt="">
-                    <img src="images/resource/blog1-2.jpg" alt="">
-                  </div>
-                  <a href="news-details.html" class="icon"><i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                <div class="content">
-                  <div class="sub-title"><span>December 7, 2025</span>No Comments</div>
-                   <div class="h4 title"><a href="news-details.html">Driving Tangible Results: How Agencies Convert</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="blog-block col-xl-4 col-md-6">
-              <div class="inner-block">
-                <div class="image-box">
-                  <div class="image">
-                    <img src="images/resource/blog1-3.jpg" alt="">
-                    <img src="images/resource/blog1-3.jpg" alt="">
-                  </div>
-                  <a href="news-details.html" class="icon"><i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                <div class="content">
-                  <div class="sub-title"><span>December 7, 2025</span>No Comments</div>
-                   <div class="h4 title"><a href="news-details.html">Traffic to Customers: How Leading Agencies Succeed</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- end blog-section -->
+      const applyFilters = () => {
+        const location = locationInput.value.trim().toLowerCase();
+        const propertyType = typeSelect.value;
+        const maxBudget = Number(budgetSelect.value) || Infinity;
+        let visibleCount = 0;
 
-    <!-- start faq-section -->
-    <section class="faq-section-two">
-      <div class="auto-container">
-        <div class="row">
-          <div class="content-column col-xl-6">
-            <div class="inner-coloumn wow fadeInUp" data-wow-delay="200ms">
-              <div class="sec-title">
-                 <div class="h6 sub-title">asked Question</div>
-                 <div class="h2 title char-animation">All essential property doubts clarified</div>
-              </div>
-              <div class="info-box">
-                <div class="image"><img src="images/resource/faq2-1.jpg" alt=""></div>
-                <div class="content">
-                   <div class="h4 title">Have Any Question on Your Minds?</div>
-                  <a class="theme-btn btn-style-four" href="page-faq.html">
-                    <span class="icon">
-                      <i class="fa-solid fa-arrow-right"></i>
-                      <i class="fa-solid fa-arrow-right"></i>
-                    </span>
-                    <span class="btn-title">Reed More</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="faq-column col-xl-6">
-            <div class="inner-column wow fadeInUp" data-wow-delay="400ms">
-              <div class="faq-box">
-                <div class="inner-box">
-                  <ul class="accordion-box">
-                    <!--Block-->
-                    <li class="accordion block">
-                      <div class="acc-btn active">1. What services does your agency offer?
-                        <i class="icon fa-solid fa-chevron-down"></i>
-                      </div>
-                      <div class="acc-content">
-                        <div class="content">
-                          <div class="text">We go beyond job boards. Our process includes proactive talent mapping leveraging our extensive network, and using advanced screboards. Our process includes proactive talent mapping leveraging our extensive network, and using advanced screening tools.We go beyond job mapping</div>
-                        </div>
-                      </div>
-                    </li>
-                    <!--Block-->
-                    <li class="accordion block active-block">
-                      <div class="acc-btn">2. What is your typical time-to-fill for roles?
-                        <i class="icon fa-solid fa-chevron-down"></i>
-                      </div>
-                      <div class="acc-content current">
-                        <div class="content">
-                          <div class="text">We go beyond job boards. Our process includes proactive talent mapping leveraging our extensive network, and using advanced screboards. Our process includes proactive talent mapping leveraging our extensive network, and using advanced screening tools.We go beyond job mapping</div>
-                        </div>
-                      </div>
-                    </li>
-                    <!--Block-->
-                    <li class="accordion block">
-                      <div class="acc-btn">3. Do you offer a guarantee on your placements?
-                        <i class="icon fa-solid fa-chevron-down"></i>
-                      </div>
-                      <div class="acc-content">
-                        <div class="content">
-                          <div class="text">We go beyond job boards. Our process includes proactive talent mapping leveraging our extensive network, and using advanced screboards. Our process includes proactive talent mapping leveraging our extensive network, and using advanced screening tools.We go beyond job mapping</div>
-                        </div>
-                      </div>
-                    </li>
-                    <!--Block-->
-                    <li class="accordion block">
-                      <div class="acc-btn">4. Can we customize a package to fit our budget?
-                        <i class="icon fa-solid fa-chevron-down"></i>
-                      </div>
-                      <div class="acc-content">
-                        <div class="content">
-                          <div class="text">We go beyond job boards. Our process includes proactive talent mapping leveraging our extensive network, and using advanced screboards. Our process includes proactive talent mapping leveraging our extensive network, and using advanced screening tools.We go beyond job mapping</div>
-                        </div>
-                      </div>
-                    </li>
-                    <!--Block-->
-                    <li class="accordion block">
-                      <div class="acc-btn">5. Can you support remote or international hiring?
-                        <i class="icon fa-solid fa-chevron-down"></i>
-                      </div>
-                      <div class="acc-content">
-                        <div class="content">
-                          <div class="text">We go beyond job boards. Our process includes proactive talent mapping leveraging our extensive network, and using advanced screboards. Our process includes proactive talent mapping leveraging our extensive network, and using advanced screening tools.We go beyond job mapping</div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- end faq-section -->
+        cards.forEach((card) => {
+          const matchesLocation = !location || card.dataset.location.includes(location);
+          const matchesType = !propertyType || card.dataset.type === propertyType;
+          const matchesBudget = Number(card.dataset.price) <= maxBudget;
+          const matchesMode = card.dataset.mode === listingMode;
+          const visible = matchesLocation && matchesType && matchesBudget && matchesMode;
 
-    <!-- start conatct-section-two -->
-    <section class="conatct-section-two">
-      <div class="outer-box">
-        <div class="shape-1"><img src="images/icons/shape-19.png" alt=""></div>
-        <div class="row">
-          <div class="image-column col-lg-6">
-            <div class="inner-column">
-              <div class="image"><img src="images/resource/conatct2-1.jpg" alt=""></div>
-              <div class="info-box">
-                <div class="info">
-                  <div class="icon"><i class="fa-sharp fa-light fa-phone"></i></div>
-                  <div class="content">
-                    <span>Call us</span>
-                     <div class="h5 title">(+234) 854-328-2548</div>
-                  </div>
-                </div>
-                <div class="info">
-                  <div class="icon"><i class="fa-sharp fa-light fa-envelope"></i></div>
-                  <div class="content">
-                    <span>Email Us</span>
-                     <div class="h5 title">example@gmail.com</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-column col-lg-6">
-            <div class="inner-column">
-              <div class="sec-title">
-                 <div class="h6 sub-title">Send Message</div>
-                 <div class="h2 title char-animation">For any query, get in touch with us</div>
-              </div>
-              <div class="form-box">
-                <div class="inner-box">
-                  <form action="#">
-                    <div class="row gx-3">
-                      <div class="col-sm-6 wow fadeInUp animated" data-wow-delay=".2s">
-                        <div class="form-clt">
-                          <input type="text" name="name" id="name" placeholder="Your Name" required="">
-                        </div>
-                      </div>
-                      <div class="col-sm-6 wow fadeInUp animated" data-wow-delay=".4s">
-                        <div class="form-clt">
-                          <input type="email" name="email" id="email" placeholder="Email">
-                        </div>
-                      </div>
-                      <div class="col-sm-6 wow fadeInUp animated" data-wow-delay=".6s">
-                        <div class="form-clt">
-                          <input name="tel" id="tel" type="tel" placeholder="Phone Number">
-                        </div>
-                      </div>
-                      <div class="col-sm-6 wow fadeInUp animated" data-wow-delay=".6s">
-                        <div class="form-clt">
-                          <input name="name" id="name2" type="text" placeholder="Subject">
-                        </div>
-                      </div>
-                      <div class="col-sm-12 wow fadeInUp animated" data-wow-delay=".2s">
-                        <div class="form-clt">
-                          <textarea name="form_message" class="required" placeholder="Message"></textarea>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 wow fadeInUp animated" data-wow-delay=".2s">
-                        <button class="theme-btn btn-style-three" type="submit">
-                          <span class="btn-title">Send a Message </span>
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- end conatct-section-two -->
+          card.hidden = !visible;
+          if (visible) visibleCount += 1;
+        });
 
-    <!-- start client section -->
-    <section class="client-section">
-      <div class="auto-container">
-        <div class="row">
-          <div class="client-box one col-lg-12">
-            <div class="swiper-container client-h2-slider pb-0">
-              <div class="swiper-wrapper">
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-1.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-2.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-3.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-4.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-5.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-1.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-2.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-3.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-4.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-5.png" alt=""></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="client-box">
-            <div class="swiper-container client-h2-slider pb-0">
-              <div class="swiper-wrapper">
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-3.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-4.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-5.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-1.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-2.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-3.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-4.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-5.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-1.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="client-block swiper-slide">
-                  <div class="inner-block">
-                    <div class="image"><img src="images/icons/client1-2.png" alt=""></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- end client section -->
+        emptyState.style.display = visibleCount ? "none" : "block";
+        resultCount.textContent = visibleCount === 1
+          ? "Showing 1 handpicked home"
+          : `Showing ${visibleCount} handpicked homes`;
+      };
 
-    <!-- Main Footer -->
-    <footer class="main-footer footer-style-one">
-      <div class="shape-1"><img src="images/resource/footer1-1.png" alt=""></div>
-      <!-- Widgets Section -->
-      <div class="widgets-section">
-        <div class="anim-icon"><img src="images/icons/footer-h1-2.png" alt=""></div>
-        <div class="auto-container">
-          <div class="row align-items-center">
-            <!-- Footer Column -->
-            <div class="footer-column col-lg-5">
-              <div class="footer-widget about-widget wow fadeInLeft">
-                <div class="footer-logo"><img src="images/logo3.png" alt=""></div>
-              </div>
-            </div>
-            <!-- footer column -->
-            <div class="footer-column col-lg-2">
-            </div>
-            <div class="footer-column style-two col-lg-5">
-              <div class="footer-widget subscribe-widget wow fadeInLeft" data-wow-delay="200ms">
-                 <div class="h5 text">Get the latest inspiration & insights</div>
-              </div>
-            </div>
-          </div>
-          <hr class="mb-40">
-          <div class="row">
-            <!-- Footer Column -->
-            <div class="footer-column border-0 col-lg-5 col-md-4">
-              <div class="footer-widget about-widget wow fadeInLeft">
-                <div class="widget-content">
-                  <div class="contact-area">
-                    <a class="phone" href="tel:01750050088">+ (123) 456-7890</a>
-                    <a class="mail" href="mailto:domain@example.com">domain@example.com</a>
-                  </div>
-                  <div class="social-widget mt-30">
-                    <ul class="social-icon-list1 mb-5 mb-lg-0">
-                      <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                      <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                      <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
-                      <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- footer column -->
-            <div class="footer-column border-0 col-lg-2 col-md-1">
-            </div>
-            <div class="footer-column style-two border-0 col-lg-5 col-md-7">
-              <div class="row d-block d-md-flex">
-                <div class="footer-widget links-widget col wow fadeInLeft" data-wow-delay="400ms">
-                   <div class="h5 widget-title">Quick Link</div>
-                  <div class="widget-content mb-5 mb-sm-0">
-                    <ul class="user-links">
-                      <li><a href="#">About Us</a></li>
-                      <li><a href="#">Our Team</a></li>
-                      <li><a href="#">Our Portfolio</a></li>
-                      <li><a href="#">Careers</a></li>
-                      <li><a href="#">Contact Us</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="footer-widget style-two links-widget col wow fadeInLeft" data-wow-delay="400ms">
-                   <div class="h5 widget-title">Our Works</div>
-                  <div class="widget-content">
-                    <ul class="user-links">
-                      <li><a href="#">Apartment Building</a></li>
-                      <li><a href="#">Construction Management</a></li>
-                      <li><a href="#">Investment & Capital</a></li>
-                      <li><a href="#">Architecture & Design</a></li>
-                      <li><a href="#">Projects Management</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      searchForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        applyFilters();
+        document.querySelector("#properties").scrollIntoView({ behavior: "smooth" });
+      });
 
-          <div class="footer-bottom">
-            <div class="inner-container justify-content-center justify-content-sm-between">
-              <p class="copyright-text">© Copyright Reserved by Company.com</p>
-              <ul class="d-flex align-items-center gap-3">
-                <li><a href="#0">Privacy Policy</a></li>
-                <li><a href="#0">Term of Service</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <!--End Main Footer -->
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          listingMode = tab.dataset.mode;
+          tabs.forEach((item) => item.setAttribute("aria-selected", String(item === tab)));
+          updateBudgetOptions();
+          applyFilters();
+        });
+      });
 
+      document.querySelectorAll(".favorite").forEach((button) => {
+        button.addEventListener("click", () => {
+          const saved = button.getAttribute("aria-pressed") !== "true";
+          button.setAttribute("aria-pressed", String(saved));
+          button.setAttribute(
+            "aria-label",
+            `${saved ? "Remove" : "Save"} ${button.getAttribute("aria-label").replace(/^(Save|Remove) /, "")}`
+          );
+        });
+      });
 
-  </div>
-<!-- End Page Wrapper -->
+      menuToggle.addEventListener("click", () => {
+        const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+        menuToggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+        navLinks.classList.toggle("is-open", !isOpen);
+      });
 
-<script src="js/jquery.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.fancybox.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/wow.js"></script>
-<script src="js/select2.min.js"></script>
-<script src="js/appear.js"></script>
-<script src="js/bxslider.js"></script>
-<script src="js/knob.js"></script>
-<script src="js/swiper.min.js"></script>
-<script src="js/aos.js"></script>
-<script src="js/gsap.min.js"></script>
-<script src="js/ScrollTrigger.min.js"></script>
-<script src="js/splitType.js"></script>
-<script src="js/gsap-scroll-smoother.js"></script>
-<script src="js/gsap-scroll-to-plugin.js"></script>
-<script src="js/SplitText.min.js"></script>
-<script src="js/custom-gsap.js"></script>
-<script src="js/script.js"></script>
+      navLinks.addEventListener("click", (event) => {
+        if (event.target.closest("a")) {
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.setAttribute("aria-label", "Open navigation menu");
+          navLinks.classList.remove("is-open");
+        }
+      });
+
+      applyFilters();
+    })();
+  </script>
 </body>
 </html>
