@@ -284,6 +284,40 @@ cd Real_Estate_Management_System_project
 
 **Do not commit:** `.env`, database passwords, payment credentials, customer documents or real personal data.
 
+### Admin dashboard prototype
+
+The admin overview is available at `admin/dashboard.php`; unauthenticated visitors are sent to `admin/login.php`. Sign-in checks for an active account whose `roles.role_name` is `admin`, and uses the existing `users.password_hash` field.
+
+1. Import `database/real_estate_db.sql` into MySQL.
+2. Set `ESTATEFLOW_DB_HOST` (optional; defaults to `127.0.0.1`), `ESTATEFLOW_DB_NAME` (`estateflow_db`), `ESTATEFLOW_DB_USER`, and `ESTATEFLOW_DB_PASSWORD` in the PHP server environment. PHP 7.3+ with the `pdo_mysql` extension is required.
+3. If one does not already exist, create the `admin` role:
+
+   ```sql
+   INSERT INTO roles (role_name, description)
+   VALUES ('admin', 'Administrator access');
+   ```
+
+   Generate a password hash in a terminal with `php -r "echo password_hash(trim(fgets(STDIN)), PASSWORD_DEFAULT), PHP_EOL;"` (enter the password when prompted), then add the admin user using that hash:
+
+   ```sql
+   INSERT INTO users (role_id, name, email, password_hash, status)
+   SELECT role_id, 'Administrator', 'admin@example.com', '<paste generated hash>', 'active'
+   FROM roles
+   WHERE role_name = 'admin';
+   ```
+
+4. Start the PHP development server from the repository root and visit `http://127.0.0.1:8000/admin/login.php`:
+
+   ```powershell
+   $env:ESTATEFLOW_DB_HOST = "127.0.0.1"
+   $env:ESTATEFLOW_DB_NAME = "estateflow_db"
+   $env:ESTATEFLOW_DB_USER = "root"
+   $env:ESTATEFLOW_DB_PASSWORD = "your-local-database-password"
+   php -S 127.0.0.1:8000
+   ```
+
+The dashboard's charts, bookings, visits, and property form remain sample preview content; only its administrator session and sign-in/out flow are connected to MySQL.
+
 ## 🗓 30-day development plan
 
 The proposal specifies **30 days** but does not assign individual day-by-day tasks. This is a suggested allocation:
