@@ -5,37 +5,31 @@ if (isset($_POST['login'])) {
 
   include_once('dbconfig.php');
   echo "SELECT * FROM users WHERE email = '$email' AND password_hash = '$password'";
-  $result = $conn->query("SELECT * FROM users WHERE email = '$email' AND password_hash = '$password'");
+  // $result = $conn->query("SELECT * FROM users WHERE email = '$email' AND password_hash = '$password'");
 
-  $row = $result->fetch_assoc();
-
-
-  if ($result->num_rows > 0) {
-    session_start();
-    $_SESSION['email'] = $email;
-    $_SESSION['name'] = $row['name'];
-    $_SESSION['role'] = $row['role_id'];
+  // $row = $result->fetch_assoc();
 
 
-    if ($row['role_id'] == 1) {
-      $_SESSION['url'] = 'users_dashboard.php';
-      header("Location: users_dashboard.php");
-    } else if ($row['role_id'] == 2) {
-      $_SESSION['url'] = 'customers_dashboard.php';
-      header("Location: customers_dashboard.php");
-    } else if ($row['role_id'] == 1) {
-      $_SESSION['url'] = 'agents_dashboard.php';
-      header("Location: agents_dashboard.php");
-    }
-  } else {
-    echo '
-                  <div class="alert border-0 bg-danger-subtle alert-dismissible fade show">
-                  <div class="d-flex align-items-center">
-                    <div class="text-danger">Problem Login</div>
-                  </div>
-                  </div>
-                  ';
-  }
+  // if ($result->num_rows > 0) {
+  //   session_start();
+  //   $_SESSION['email'] = $email;
+  //   $_SESSION['name'] = $row['name'];
+  //   $_SESSION['role'] = $row['role_id'];
+
+
+  //   if ($row['role_id'] == 2) {
+  //     $_SESSION['url'] = 'users_dashboard.php';
+  //     header("Location: users_dashboard.php");
+  //   } else if ($row['role_id'] == 4) {
+  //     $_SESSION['url'] = 'customers_dashboard.php';
+  //     header("Location: customers_dashboard.php");
+  //   } else if ($row['role_id'] == 3 ) {
+  //     $_SESSION['url'] = 'agents_dashboard.php';
+  //     header("Location: agents_dashboard.php");
+  //   }
+  // } else {
+  //   echo 'Problem Login';
+  // }
 }
 ?>
 
@@ -66,7 +60,7 @@ if (isset($_POST['login'])) {
 
     <form class="auth-form" method="post" action="">
       <label for="email">Email address</label>
-      <input id="email" name="email" type="email" autocomplete="username" maxlength="100" value="nelamonirn@gmail.com" required autofocus>
+      <input id="email" name="email" type="email" autocomplete="username" maxlength="100" value="@gmail.com" required autofocus>
       <label for="password">Password</label>
       <input id="password" name="password" type="password" autocomplete="current-password" required>
       <button type="submit" name="login">Sign in <span aria-hidden="true">→</span></button>

@@ -4,7 +4,7 @@ if (!isset($_SESSION['email'])) {
   header("Location: index.php");
 }
 
-if ($_SESSION['role'] != 'agents') {
+if ($_SESSION['role'] != '3') {
   header("Location: unauthorize.php");
 }
 ?>
