@@ -1,21 +1,44 @@
-
 <?php
-if (isset($_POST['submit'])) {
+              if (isset($_POST['login'])) {
+                extract($_POST);
+                $password = sha1($password);
 
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+                include_once('dbconfig.php');
+                echo "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
+                $result = $conn->query("SELECT * FROM users WHERE email = '$email' AND password = '$password'");
 
-    if (filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($password)) {
+                $row = $result->fetch_assoc();
 
-        header("Location:admin/index.php");
-        exit();
 
-    } else {
-        $error = "Please enter a valid email and password.";
-    }
-}
-?>
- 
+                if ($result->num_rows > 0) {
+                  session_start();
+                  $_SESSION['email'] = $email;
+                  $_SESSION['name'] = $row['name'];
+                  $_SESSION['role'] = $row['role'];
+
+
+                  if ($row['role'] == 'users') {
+                    $_SESSION['url'] = 'users_dashboard.php';
+                    header("Location: users_dashboard.php");
+                  } else if ($row['role'] == 'customers') {
+                    $_SESSION['url'] = 'customers_dashboard.php';
+                    header("Location: customers_dashboard.php");
+                  } else if ($row['role'] == 'agents') {
+                    $_SESSION['url'] = 'agents_dashboard.php';
+                    header("Location: agents_dashboard.php");
+                  }
+                } else {
+                  echo '
+                  <div class="alert border-0 bg-danger-subtle alert-dismissible fade show">
+                  <div class="d-flex align-items-center">
+                    <div class="text-danger">Problem Login</div>
+                  </div>
+                  </div>
+                  ';
+                }
+              }
+              ?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -39,10 +62,9 @@ if (isset($_POST['submit'])) {
       <h1 id="login-heading">Welcome back</h1>
       <p class="auth-intro">Sign in with your administrator account to continue.</p>
 
-            <form class="auth-form" method="post" action="login.php">
-        <input type="hidden" name="csrf_token" value="">
+            <form class="auth-form" method="post" action="">
         <label for="email">Email address</label>
-        <input id="email" name="email" type="email" autocomplete="username" maxlength="100" value="" required autofocus>
+        <input id="email" name="email" type="email" autocomplete="username" maxlength="100" value="nelamonirn@gmail.com" required autofocus>
         <label for="password">Password</label>
         <input id="password" name="password" type="password" autocomplete="current-password" required>
         <button type="submit">Sign in <span aria-hidden="true">→</span></button>

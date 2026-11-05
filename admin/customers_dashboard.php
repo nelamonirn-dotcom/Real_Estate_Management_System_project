@@ -1,4 +1,16 @@
 
+
+<?php
+session_start();
+if (!isset($_SESSION['email'])) {
+  header("Location: index.php");
+}
+
+if ($_SESSION['role'] != 'customers') {
+  header("Location: unauthorize.php");
+}
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -124,8 +136,8 @@
             <i class="fa-solid fa-arrow-up-right-from-square help-arrow" aria-hidden="true"></i>
           </div>
           <div class="sidebar-profile">
-            <span class="profile-avatar"><?= admin_escape($adminInitial) ?></span>
-            <span class="profile-copy"><strong><?= admin_escape($adminName) ?></strong><small>Administrator</small></span>
+            <span class="profile-avatar"></span>
+            <span class="profile-copy"><strong></strong><small>Administrator</small></span>
             <a class="profile-menu" href="logout.php" aria-label="Sign out"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i></a>
           </div>
         </div>
@@ -153,7 +165,7 @@
             </button>
             <span class="topbar-divider" aria-hidden="true"></span>
             <a class="topbar-user" href="logout.php" aria-label="Sign out" title="Sign out">
-              <span class="profile-avatar"><?= admin_escape($adminInitial) ?></span><span class="topbar-user-name"><?= admin_escape($adminName) ?></span><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
+              <span class="profile-avatar"></span><span class="topbar-user-name"></span><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
             </a>
           </div>
         </header>
@@ -162,7 +174,7 @@
           <section class="page-heading" id="overview" aria-labelledby="welcome-heading">
             <div>
               <p class="page-eyebrow"><span class="live-dot"></span> Admin workspace</p>
-              <h1 id="welcome-heading"><span id="greeting">Good morning</span>, <?= admin_escape($adminFirstName) ?> <span class="wave" aria-hidden="true">✦</span></h1>
+              <h1 id="welcome-heading"><span id="greeting">Good morning</span>,  <span class="wave" aria-hidden="true">✦</span></h1>
               <p class="page-subtitle">Here’s what’s happening across your properties today.</p>
             </div>
             <div class="heading-actions">
